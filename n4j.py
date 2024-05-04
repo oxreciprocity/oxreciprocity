@@ -6,7 +6,7 @@
 - TODO: Build UI (post-auth flow)
 - MAYBE: After someone's created an account, they don't really need to log in using their MSID -
   maybe there's a quicker flow with only FB auth?
-
+- TODO: reminder when X friends have signed up
 """
 
 from dataclasses import dataclass
