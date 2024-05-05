@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Homepage</title>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	</head>
+
+	<body>
+		<p class="user"><%= user.displayName %></p>
+		<form action="/auth/logout" method="post">
+			<button class="logout" type="submit">Sign out</button>
+			<input type="hidden" name="_csrf" value="<%= csrfToken %>">
+		</form>
+		<h2>My Friends</h2>
+		<% friends.forEach(function(friend) { %>
+			<form action="/submit" method="POST">
+			  <fieldset>
+				<legend><%= friend.name %></legend>
+		 
+				<!-- Hidden Fields for User FBID and Target Friend FBID ?? what do these do?? -->
+				<input type="hidden" name="userFbid" value="<%= user.id %>" />
+				<input type="hidden" name="targetFbid" value="<%= friend.fbid %>" />
+		 
+				<!-- Checkboxes for Levels -->
+				<div>
+					<label><input type="checkbox" name="r1" value="true" <%= friend.r1 ? 'checked' : '' %> /> R1</label>
+					<label><input type="checkbox" name="r2" value="true" <%= friend.r2 ? 'checked' : '' %> /> R2</label>
+					<label><input type="checkbox" name="r3" value="true" <%= friend.r3 ? 'checked' : '' %> /> R3</label>
+				</div>
+		 
+				<button type="submit">Update Relationship</button>
+				<input type="hidden" name="_csrf" value="<%= csrfToken %>">
+			  </fieldset>
+			</form>
+		  <% }); %>
+
+		<script>
+			$(document).ready(function() {
+			  $('form').submit(function(event) {
+				event.preventDefault(); // Prevent the default form submission
+			
+				const formData = $(this).serialize(); // Serialize form data
+				const form = $(this); // Reference to the form
+			
+				$.ajax({
+				  type: 'POST',
+				  url: '/submit', // Your endpoint
+				  data: formData,
+				  success: function(response) {
+					// On success, display a notification to the user
+					alert('Submission Successful!'); // For simplicity, using an alert. Consider using a more user-friendly notification.
+				  },
+				  error: function(xhr) {
+					// Handle error
+					alert('Submission Failed: ' + xhr.responseText);
+				  }
+				});
+			  });
+			});
+			</script>
+	</body>
+</html>

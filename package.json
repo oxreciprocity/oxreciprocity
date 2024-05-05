@@ -1,0 +1,21 @@
+{
+  "dependencies": {
+    "connect-ensure-login": "^0.1.1",
+    "connect-sqlite3": "^0.9.15",
+    "cookie-parser": "^1.4.6",
+    "csurf": "^1.11.0",
+    "dotenv": "^16.4.5",
+    "ejs": "^3.1.10",
+    "express": "^4.19.2",
+    "express-session": "^1.18.0",
+    "method-override": "^3.0.0",
+    "mkdirp": "^3.0.1",
+    "morgan": "^1.10.0",
+    "neo4j-driver": "^5.20.0",
+    "node-fetch": "^2.7.0",
+    "passport": "^0.7.0",
+    "passport-facebook": "^3.0.0",
+    "passport-microsoft": "^2.1.0",
+    "pluralize": "^8.0.0"
+  }
+}
