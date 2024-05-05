@@ -5,8 +5,8 @@ export default function Row({friend}: {friend: friendsData}) {
     return (
         <div className="flex flex-col items-center bg-white shadow-md rounded-md p-4 m-2">
             <img src={friend.image} alt={friend.name} className="rounded-full h-32 w-32 object-cover mb-4" />
-            <h2 className="text-lg font-bold mb-2">{friend.name}</h2>
-            <div className="flex justify-between w-full">
+            <h2 className="text-lg font-bold mb-2 text-black">{friend.name}</h2>
+            <div className="flex justify-between w-full text-black">
                 <div>
                     <label>
                         Date: 
