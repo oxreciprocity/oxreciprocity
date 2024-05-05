@@ -12,7 +12,7 @@
 	<p class="user">
 		<%= user.displayName %>
 	</p>
-	<form action="/auth/logout" method="post">
+	<form action="/auth/logout" method="post" class="logout">
 		<button class="logout" type="submit">Sign out</button>
 		<input type="hidden" name="_csrf" value="<%= csrfToken %>">
 	</form>
@@ -24,7 +24,7 @@
 
 			<script>
 				$(document).ready(function () {
-					$('form').submit(function (event) {
+					$('.friends').submit(function (event) {
 						event.preventDefault(); // Prevent the default form submission
 
 						const formData = $(this).serialize(); // Serialize form data
