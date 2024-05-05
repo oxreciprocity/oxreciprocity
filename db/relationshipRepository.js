@@ -29,21 +29,14 @@ async function findMatches(userFbid) {
   MATCH (user:User {fbid: $userFbid})-[rOut:FRIENDS]->(friend:User)
   MATCH (friend)-[rInv:FRIENDS]->(user)
   WITH user, friend, rOut, rInv
-  RETURN friend.fbid AS fbid, friend.name AS name,
-         CASE WHEN rOut.r1 AND rInv.r1 THEN true ELSE false END AS r1,
-         CASE WHEN rOut.r2 AND rInv.r2 THEN true ELSE false END AS r2,
-         CASE WHEN rOut.r3 AND rInv.r3 THEN true ELSE false END AS r3
+  RETURN
+     collect(DISTINCT CASE WHEN rOut.r1 AND rInv.r1 THEN {fbid: friend.fbid, name: friend.name} END) AS r1,
+     collect(DISTINCT CASE WHEN rOut.r2 AND rInv.r2 THEN {fbid: friend.fbid, name: friend.name} END) AS r2,
+     collect(DISTINCT CASE WHEN rOut.r3 AND rInv.r3 THEN {fbid: friend.fbid, name: friend.name} END) AS r3
   `;
 
   try {
-    const result = await session.run(
-      `MATCH (user:User {fbid: $userFbid})-[rOut:FRIENDS]->(friend:User)
-         MATCH (friend)-[rInv:FRIENDS]->(user)
-         WITH user, friend, rOut, rInv
-         RETURN
-            collect(DISTINCT CASE WHEN rOut.r1 AND rInv.r1 THEN {fbid: friend.fbid, name: friend.name} END) AS r1,
-            collect(DISTINCT CASE WHEN rOut.r2 AND rInv.r2 THEN {fbid: friend.fbid, name: friend.name} END) AS r2,
-            collect(DISTINCT CASE WHEN rOut.r3 AND rInv.r3 THEN {fbid: friend.fbid, name: friend.name} END) AS r3`,
+    const result = await session.run(rMatchesQuery,
       { userFbid }
     );
 
