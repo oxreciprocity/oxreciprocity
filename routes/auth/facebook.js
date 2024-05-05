@@ -11,7 +11,7 @@ function ensureMsAuth(req, res, next) {
 
 const router = Router();
 
-router.get('/', ensureMsAuth, passport.authenticate('facebook', { scope: ['user_friends'] })); // TODO add to authenticate call 
+router.get('/', ensureMsAuth, passport.authenticate('facebook', { scope: ['user_friends'] }));
 
 router.get('/callback', passport.authenticate('facebook', { failureRedirect: '/' }), // TODO tell user reason for failure
   function (req, res) {
