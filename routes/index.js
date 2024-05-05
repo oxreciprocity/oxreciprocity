@@ -27,6 +27,4 @@ router.get('/', async function(req, res, next) {
   }
 });
 
-// TODO define POST for homepage when submitting preferences. Use Nick's n4j logic.
-
 module.exports = router;
