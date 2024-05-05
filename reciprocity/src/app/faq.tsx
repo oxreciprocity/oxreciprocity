@@ -5,7 +5,7 @@ export default function Faq() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   const questions = [
-    { question: "Question 1", answer: "Answer 1" },
+    { question: "Why can't I click the checkbox?", answer: "You can only" },
     { question: "Question 2", answer: "Answer 2" },
     // Add more questions as needed
   ];
