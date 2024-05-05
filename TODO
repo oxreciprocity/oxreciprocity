@@ -1,0 +1,37 @@
+## Security
+- TODO: Add hashing for ids
+  - though not really sensitive information since application-scoped?
+- TODO: Find another csrf package 
+- TODO: Check SQL injection not possible
+- TODO: Enable HTTPS
+- MAYBE: After someone's created an account, they don't really need to log in using their MSID -
+  maybe there's a quicker flow with only FB auth?
+
+## UI
+- TODO: Build logic to get names+profile pictures(+profile urls?) from Facebook
+- TODO: Build UI (post-auth flow)
+
+## Before production
+- TODO: add the non-development redirect URIs to: .env, auth/*.js files, in applications
+  - for MS, in authentication > redirect URIs
+  - for FB, in use cases > customise > settings
+- TODO: Build actual tests
+
+## Features
+- TODO: reminder when X friends have signed up
+- TODO: Build rate limiter to prevent spam
+
+## Code tidiness
+- TODO: file structure, use of controllers, auth routers (e.g. auth/index.js)
+- TODO: consistency around async operations (use async/await rather than .then)
+- TODO: switch to ES module imports
+
+## resetting database
+MATCH(n)
+DETACH DELETE n;
+CREATE (:User {fbid: "0", name: "John Doe", active: TRUE})
+CREATE (:User {fbid: "1", name: "Jane Roe", active: TRUE})
+
+MATCH (a)-[rel:FRIENDS]-(b)
+WHERE a.fbid = "0" AND b.fbid = "876336624537422"
+SET rel.r1 = true
