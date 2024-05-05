@@ -2,7 +2,8 @@
 // It renders a different view depending on whether the user is logged in with Facebook, Microsoft, or not at all.
 
 const express = require('express');
-const userRepository = require('../db/userRepository');
+const { findFriendsByUserId } = require('../db/userRepository');
+const { getMatches } = require('../controllers/relationshipController');
 const { updateUserFriends } = require('../services/friendService');
 const router = express.Router();
 
@@ -12,9 +13,11 @@ router.get('/', async function(req, res, next) {
     console.log("req.user: ", req.user)
     const { id, accessToken } = req.user;
     await updateUserFriends(id, accessToken);
-    const friends = await userRepository.findFriendsByUserId(id);
+    const friends = await findFriendsByUserId(id);
+    const matches = await getMatches(id);
+    console.log("matches: ", matches)
     console.log('friends:', friends);
-    res.render('loggedIn', { user: req.user, friends: friends });
+    res.render('loggedIn', { user: req.user, friends: friends, matches: matches });
   } else if (req.session.msAuth) {
     console.log('user is logged in with Microsoft', req.user);
     res.render('innerLogin');

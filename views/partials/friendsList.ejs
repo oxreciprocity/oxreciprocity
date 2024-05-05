@@ -1,0 +1,21 @@
+<% friends.forEach(function(friend) { %>
+    <form action="/submit" method="POST">
+      <fieldset>
+        <legend><%= friend.name %></legend>
+ 
+        <!-- Hidden Fields for User FBID and Target Friend FBID ?? what do these do?? -->
+        <input type="hidden" name="userFbid" value="<%= user.id %>" />
+        <input type="hidden" name="targetFbid" value="<%= friend.fbid %>" />
+ 
+        <!-- Checkboxes for Levels -->
+        <div>
+            <label><input type="checkbox" name="r1" value="true" <%= friend.r1 ? 'checked' : '' %> /> R1</label>
+            <label><input type="checkbox" name="r2" value="true" <%= friend.r2 ? 'checked' : '' %> /> R2</label>
+            <label><input type="checkbox" name="r3" value="true" <%= friend.r3 ? 'checked' : '' %> /> R3</label>
+        </div>
+ 
+        <button type="submit">Update Relationship</button>
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+      </fieldset>
+    </form>
+  <% }); %>

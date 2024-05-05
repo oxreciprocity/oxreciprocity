@@ -1,35 +1,6 @@
-// This file is called after a POST request submitting new relationships is made to the server, to handle adding those edges.
+// This file deals with updating relationship edges in the graph, and finding mutual matches.
 
 const driver = require('./neo4j');
-
-// async function changeRelationship(userFbid, targetFbid, level, ticked) {
-//     if (![1, 2, 3].includes(level)) {
-//       throw new Error("Invalid level. Level must be 1, 2, or 3.");
-//     }
- 
-//     const session = driver.session();
-//     try {
-//       const query = `
-//         MATCH (user:User {fbid: $userFbid})-[r:FRIENDS]->(target:User {fbid: $targetFbid})
-//         WITH r, CASE WHEN $level = 1 THEN $ticked ELSE r.r1 END AS r1,
-//                     CASE WHEN $level = 2 THEN $ticked ELSE r.r2 END AS r2,
-//                     CASE WHEN $level = 3 THEN $ticked ELSE r.r3 END AS r3
-//         SET r.r1 = r1, r.r2 = r2, r.r3 = r3
-//         RETURN COUNT(r) AS relationshipCount
-//       `;
-//       const result = await session.run(query, { userFbid, targetFbid, level, ticked });
-//       const relationshipCount = result.records[0].get('relationshipCount').toInt();
- 
-//       if (relationshipCount === 0) {
-//         // Handle no relationship found case
-//         throw new Error(`No relationship found between user ${userFbid} and target ${targetFbid}`);
-//       }
- 
-//       return relationshipCount; // Or any other relevant data
-//     } finally {
-//       await session.close();
-//     }
-//   }
 
 async function changeRelationship(userFbid, targetFbid, levels) {
   const session = driver.session();
@@ -52,4 +23,81 @@ async function changeRelationship(userFbid, targetFbid, levels) {
   }
 }
 
-module.exports = { changeRelationship };
+// async function findMatches(userFbid) {
+//   const session = driver.session();
+//   try {
+//     /*const query = `
+//     MATCH (user:User {fbid: $userFbid})-[userToFriend:FRIENDS]->(friend:User)<-[friendToUser:FRIENDS]-(user)
+//     WHERE userToFriend.r1 = friendToUser.r1 AND userToFriend.r1 = true
+//       OR userToFriend.r2 = friendToUser.r2 AND userToFriend.r2 = true
+//       OR userToFriend.r3 = friendToUser.r3 AND userToFriend.r3 = true
+//     RETURN
+//       COLLECT(DISTINCT CASE WHEN userToFriend.r1 = true THEN friend.fbid END) AS r1Matches,
+//       COLLECT(DISTINCT CASE WHEN userToFriend.r2 = true THEN friend.fbid END) AS r2Matches,
+//       COLLECT(DISTINCT CASE WHEN userToFriend.r3 = true THEN friend.fbid END) AS r3Matches
+//     `;*/
+//     const result = await session.run(query, { userFbid });
+//     console.log("matching result: ", result.records)
+//     if (result.records.length === 0) {
+//       // No matches found
+//       return { r1: [], r2: [], r3: [] };
+//     }
+
+//     const record = result.records[0];
+//     const matches = {
+//       r1: record.get('r1Matches').filter(id => id !== null), // Filter out nulls
+//       r2: record.get('r2Matches').filter(id => id !== null),
+//       r3: record.get('r3Matches').filter(id => id !== null),
+//     };
+
+//     return matches;
+//   } finally {
+//     await session.close();
+//   }
+// }
+
+async function findMatches(userFbid) {
+  const session = driver.session();
+  const mutualMatchesQuery = `
+  MATCH (user:User {fbid: $userFbid})-[rOut:FRIENDS]->(friend:User)
+  MATCH (friend)-[rInv:FRIENDS]->(user)
+  WITH user, friend, rOut, rInv
+  RETURN friend.fbid AS fbid, friend.name AS name,
+         CASE WHEN rOut.r1 AND rInv.r1 THEN true ELSE false END AS r1,
+         CASE WHEN rOut.r2 AND rInv.r2 THEN true ELSE false END AS r2,
+         CASE WHEN rOut.r3 AND rInv.r3 THEN true ELSE false END AS r3
+  `;
+
+  try {
+    const result = await session.run(mutualMatchesQuery, { userFbid });
+        // Initialize an object to store matches by level
+        let matches = {
+          r1: [],
+          r2: [],
+          r3: []
+      };
+
+      // Iterate over each record and group by mutual relationship levels
+      result.records.forEach(record => {
+          const fbid = record.get('fbid');
+          const name = record.get('name');
+          if (record.get('r1')) {
+              matches.r1.push({ fbid, name });
+          }
+          if (record.get('r2')) {
+              matches.r2.push({ fbid, name });
+          }
+          if (record.get('r3')) {
+              matches.r3.push({ fbid, name });
+          }
+      });
+      return matches;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  } finally {
+    await session.close();
+  }
+}
+
+module.exports = { changeRelationship, findMatches };

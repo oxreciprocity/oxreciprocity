@@ -2,7 +2,7 @@
 
 // This file is called after a POST request submitting new relationships is made to the server
 
-const { changeRelationship } = require('../db/relationshipRepository');
+const { changeRelationship, findMatches } = require('../db/relationshipRepository');
 
 async function updateRelationship(req, res) {
   console.log(req.body)
@@ -19,4 +19,8 @@ async function updateRelationship(req, res) {
   }
 }
 
-module.exports = { updateRelationship };
+async function getMatches(userId) {
+  return await findMatches(userId);
+}
+
+module.exports = { updateRelationship, getMatches };
