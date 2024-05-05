@@ -1,10 +1,10 @@
 <% Object.entries(matches).forEach(function([key, value]) { %>
-    <h3><%= key %></h3>
-    <% if (value.length > 0) { %>
-        <% value.forEach(function(match) { %>
-            <p><%= match.name %></p>
-        <% }); %>
-    <% } else { %>
-        <p>No matches found.</p>
-    <% } %>
+  <h3><%= key %></h3>
+  <% if (value.length > 0) { %>
+    <% value.forEach(function(match) { %>
+      <p><%= match.name %></p>
+    <% }); %>
+  <% } else { %>
+    <p>No matches found.</p>
+  <% } %>
 <% }); %>

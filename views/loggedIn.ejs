@@ -1,48 +1,52 @@
 <!doctype html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>Homepage</title>
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-	</head>
 
-	<body>
-		<p class="user"><%= user.displayName %></p>
-		<form action="/auth/logout" method="post">
-			<button class="logout" type="submit">Sign out</button>
-			<input type="hidden" name="_csrf" value="<%= csrfToken %>">
-		</form>
-    <h2>My Friends</h2>
-    <%- include('partials/friendsList') %>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Homepage</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
 
-    <h2>Matches</h2>
-    <%- include('partials/mutualMatches') %>
+<body>
+	<p class="user">
+		<%= user.displayName %>
+	</p>
+	<form action="/auth/logout" method="post">
+		<button class="logout" type="submit">Sign out</button>
+		<input type="hidden" name="_csrf" value="<%= csrfToken %>">
+	</form>
+	<h2>My Friends</h2>
+	<%- include('partials/friendsList') %>
 
-		<script>
-			$(document).ready(function() {
-			  $('form').submit(function(event) {
-				event.preventDefault(); // Prevent the default form submission
-			
-				const formData = $(this).serialize(); // Serialize form data
-				const form = $(this); // Reference to the form
-			
-				$.ajax({
-				  type: 'POST',
-				  url: '/submit', // Your endpoint
-				  data: formData,
-				  success: function(response) {
-					// On success, display a notification to the user
-					alert('Submission Successful!'); // For simplicity, using an alert. Consider using a more user-friendly notification.
-          window.location.reload();
-				  },
-				  error: function(xhr) {
-					// Handle error
-					alert('Submission Failed: ' + xhr.responseText);
-				  }
+		<h2>Matches</h2>
+		<%- include('partials/mutualMatches') %>
+
+			<script>
+				$(document).ready(function () {
+					$('form').submit(function (event) {
+						event.preventDefault(); // Prevent the default form submission
+
+						const formData = $(this).serialize(); // Serialize form data
+						const form = $(this); // Reference to the form
+
+						$.ajax({
+							type: 'POST',
+							url: '/submit', // Your endpoint
+							data: formData,
+							success: function (response) {
+								// On success, display a notification to the user
+								alert('Submission Successful!'); // For simplicity, using an alert. Consider using a more user-friendly notification.
+								window.location.reload();
+							},
+							error: function (xhr) {
+								// Handle error
+								alert('Submission Failed: ' + xhr.responseText);
+							}
+						});
+					});
 				});
-			  });
-			});
 			</script>
-	</body>
+</body>
+
 </html>

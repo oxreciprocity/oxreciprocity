@@ -45,15 +45,15 @@ app.use(csrf());
 
 app.use(passport.authenticate('session'));
 
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   var msgs = req.session.messages || [];
   res.locals.messages = msgs;
-  res.locals.hasMessages = !! msgs.length;
+  res.locals.hasMessages = !!msgs.length;
   req.session.messages = [];
   next();
 });
 
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   res.locals.csrfToken = req.csrfToken();
   next();
 });
@@ -63,13 +63,13 @@ app.use('/', indexRouter);
 // NOTE maybe this should be in a separate file
 app.use('/auth/microsoft', microsoftRoutes);
 app.use('/auth/facebook', facebookRoutes);
-app.use('/auth/logout', function(req, res) {
-  req.logout(function(err) {
+app.use('/auth/logout', function (req, res) {
+  req.logout(function (err) {
     if (err) { return next(err); }
     res.redirect('/');
   });
 });
-app.use('/auth/login', function(req, res) {
+app.use('/auth/login', function (req, res) {
   if (req.session.msAuth) {
     res.redirect('/auth/facebook');
   } else {
@@ -80,12 +80,12 @@ app.use('/auth/login', function(req, res) {
 app.use('/submit', submitRouter);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   next(createError(404));
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};

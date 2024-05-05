@@ -2,13 +2,13 @@ const driver = require('./neo4j');
 
 // TODO actually call this function and set up the database
 async function createConstraints() {
-    // Ensures that:
-    // - each user has a unique fbid (used to also check for MSID)
-    // - each FRIENDS relationship has three boolean parameters (r1, r2, r3) that are not null in each direction
+  // Ensures that:
+  // - each user has a unique fbid (used to also check for MSID)
+  // - each FRIENDS relationship has three boolean parameters (r1, r2, r3) that are not null in each direction
 
 
-    // This should only be run once, at the initialisation of the database. It will not throw if you run it again, but it will not
-    // modify the existing constraints.
+  // This should only be run once, at the initialisation of the database. It will not throw if you run it again, but it will not
+  // modify the existing constraints.
   const session = driver.session();
   try {
     // Unique constraints for User nodes

@@ -7,7 +7,7 @@ const { getMatches } = require('../controllers/relationshipController');
 const { updateUserFriends } = require('../services/friendService');
 const router = express.Router();
 
-router.get('/', async function(req, res, next) {
+router.get('/', async function (req, res, next) {
   if (req.session.fbAuth) {
     console.log('user is logged in with Facebook');
     const { id, accessToken } = req.user;

@@ -37,26 +37,26 @@ async function findMatches(userFbid) {
 
   try {
     const result = await session.run(
-        `MATCH (user:User {fbid: $userFbid})-[rOut:FRIENDS]->(friend:User)
+      `MATCH (user:User {fbid: $userFbid})-[rOut:FRIENDS]->(friend:User)
          MATCH (friend)-[rInv:FRIENDS]->(user)
          WITH user, friend, rOut, rInv
          RETURN
             collect(DISTINCT CASE WHEN rOut.r1 AND rInv.r1 THEN {fbid: friend.fbid, name: friend.name} END) AS r1,
             collect(DISTINCT CASE WHEN rOut.r2 AND rInv.r2 THEN {fbid: friend.fbid, name: friend.name} END) AS r2,
             collect(DISTINCT CASE WHEN rOut.r3 AND rInv.r3 THEN {fbid: friend.fbid, name: friend.name} END) AS r3`,
-        { userFbid }
+      { userFbid }
     );
 
     if (result.records.length > 0) {
-        const record = result.records[0];
-        let matches = {
-            r1: record.get('r1').filter(item => item !== null),
-            r2: record.get('r2').filter(item => item !== null),
-            r3: record.get('r3').filter(item => item !== null),
-        };
-        return matches;
+      const record = result.records[0];
+      let matches = {
+        r1: record.get('r1').filter(item => item !== null),
+        r2: record.get('r2').filter(item => item !== null),
+        r3: record.get('r3').filter(item => item !== null),
+      };
+      return matches;
     } else {
-        return { r1: [], r2: [], r3: [] };
+      return { r1: [], r2: [], r3: [] };
     }
   } catch (error) {
     console.error(error);

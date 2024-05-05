@@ -14,7 +14,7 @@ const router = express.Router();
 router.get('/', ensureMsAuth, passport.authenticate('facebook', { scope: ['user_friends'] })); // TODO add to authenticate call 
 
 router.get('/callback', passport.authenticate('facebook', { failureRedirect: '/' }), // TODO tell user reason for failure
-  function(req, res) {
+  function (req, res) {
     req.session.fbAuth = true;
     res.redirect('/');
   }

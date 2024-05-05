@@ -7,15 +7,15 @@ async function createUser(profile, active = true) { // Originally also took msid
   const query = `
       CREATE (:User {fbid: $fbid, name: $name, active: $active})
   `;
-    try {
-        const result = await session.run(query, { fbid, active, name });
-        session.close();
-        console.log('User created');
-        return result;
-    } catch (error) {
-        session.close();
-        throw error;
-    }
+  try {
+    const result = await session.run(query, { fbid, active, name });
+    session.close();
+    console.log('User created');
+    return result;
+  } catch (error) {
+    session.close();
+    throw error;
+  }
 }
 
 async function addAllFriends(userFbid, friendsFbids) {
@@ -29,14 +29,14 @@ async function addAllFriends(userFbid, friendsFbids) {
     MERGE (target)-[:FRIENDS {r1: false, r2: false, r3: false}]->(source)
   `;
   try {
-      const result = await session.run(query, { userFbid, friendsFbids });
-      session.close();
-      console.log('Friends added');
-      return result;
-    } catch (error) {
-        session.close();
-        throw error;
-    }
+    const result = await session.run(query, { userFbid, friendsFbids });
+    session.close();
+    console.log('Friends added');
+    return result;
+  } catch (error) {
+    session.close();
+    throw error;
+  }
 }
 
 async function userExists(fbid) {
@@ -50,7 +50,7 @@ async function userExists(fbid) {
     return result.records.length > 0;
   } catch (error) {
     console.error('Error checking user existence:', error);
-    throw error; 
+    throw error;
   } finally {
     await session.close();
   }
@@ -78,24 +78,24 @@ async function findFriendsByUserId(fbid) {
   const session = driver.session();
   try {
     const result = await session.run(
-        `MATCH (user:User {fbid: $fbid})-[rel:FRIENDS]->(friend:User)
+      `MATCH (user:User {fbid: $fbid})-[rel:FRIENDS]->(friend:User)
          RETURN friend, rel.r1 AS r1, rel.r2 AS r2, rel.r3 AS r3`,
-        { fbid }
+      { fbid }
     );
     // Adjusting the mapping to include relationship properties
     return result.records.map(record => {
-        return {
-            ...record.get('friend').properties, // Spread the friend's properties
-            r1: record.get('r1'),
-            r2: record.get('r2'),
-            r3: record.get('r3')
-        };
+      return {
+        ...record.get('friend').properties, // Spread the friend's properties
+        r1: record.get('r1'),
+        r2: record.get('r2'),
+        r3: record.get('r3')
+      };
     });
-} catch (error) {
-      console.error('Error finding friends:', error);
-      throw error;
+  } catch (error) {
+    console.error('Error finding friends:', error);
+    throw error;
   } finally {
-      await session.close();
+    await session.close();
   }
 }
 
