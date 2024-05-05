@@ -3,7 +3,7 @@ import React, { useState } from "react";
 
 export default function Faq() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
-
+    //should have a link to delecting an account? also should this be rate limited e.g. must wait 48hrs after last activity (change of checkboxes)
   const questions = [
     { question: "Why can't I click the checkbox?", answer: "You can only" },
     { question: "Question 2", answer: "Answer 2" },

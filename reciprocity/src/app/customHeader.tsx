@@ -6,5 +6,6 @@ export default function CustomHeader(){
         <div className="flex items-center justify-center bg-white py-5 ">
   <h1 className="text-2xl font-bold text-center text-pink-700">Welcome to Reciprocity</h1>
 </div>
+//maybe could add a button to swap between the selection and the match view
     );
 }
