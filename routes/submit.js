@@ -1,10 +1,10 @@
 // This is the router for receiving relationship information from the client and updating the database with it.
 
-const express = require('express');
-const { updateRelationship } = require('../controllers/relationshipController');
+import { Router } from 'express';
+import { updateRelationship } from '../controllers/relationshipController.js';
 
-const router = express.Router();
+const router = Router();
 
 router.post('/', updateRelationship);
 
-module.exports = router;
+export default router;

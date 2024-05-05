@@ -1,38 +1,47 @@
-require('dotenv').config();
+import dotenv from 'dotenv';
+dotenv.config();
 
-const createError = require('http-errors');
-const express = require('express');
-const path = require('path');
-const cookieParser = require('cookie-parser');
-const session = require('express-session');
-const csrf = require('csurf');
-const passport = require('passport');
-const logger = require('morgan');
-const authConfig = require('./auth');
+import createError from 'http-errors';
+import express from 'express';
+import { join } from 'path';
+import cookieParser from 'cookie-parser';
+import session from 'express-session';
+import csrf from 'csurf';
+import passport from 'passport';
+import logger from 'morgan';
+import authConfig from './auth/index.js';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import pluralize from 'pluralize';
+
+// __dirname is not available in ES module scope, so we create it
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // pass the session to the connect sqlite3 module
 // allowing it to inherit from session.Store
-const SQLiteStore = require('connect-sqlite3')(session);
+import connectSQLite3 from 'connect-sqlite3';
+const SQLiteStore = connectSQLite3(session);
 
-const indexRouter = require('./routes/index');
-const microsoftRoutes = require('./routes/auth/microsoft');
-const facebookRoutes = require('./routes/auth/facebook');
-const submitRouter = require('./routes/submit');
+import indexRouter from './routes/index.js';
+import microsoftRoutes from './routes/auth/microsoft.js';
+import facebookRoutes from './routes/auth/facebook.js';
+import submitRouter from './routes/submit.js';
 
 const app = express();
 authConfig(passport);
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-app.locals.pluralize = require('pluralize');
+app.locals.pluralize = pluralize;
 
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(join(__dirname, 'public')));
 
 app.use(session({
   secret: 'keyboard cat',
@@ -95,7 +104,7 @@ app.use(function (err, req, res, next) {
   res.render('error');
 });
 
-module.exports = app;
+export default app;
 
 app.listen(3000);
 

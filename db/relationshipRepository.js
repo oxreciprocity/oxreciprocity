@@ -1,6 +1,6 @@
 // This file deals with updating relationship edges in the graph, and finding mutual matches.
 
-const driver = require('./neo4j');
+import driver from './neo4j.js';
 
 async function changeRelationship(userFbid, targetFbid, levels) {
   const session = driver.session();
@@ -66,4 +66,4 @@ async function findMatches(userFbid) {
   }
 }
 
-module.exports = { changeRelationship, findMatches };
+export { changeRelationship, findMatches };

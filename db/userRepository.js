@@ -1,5 +1,5 @@
 // This file provides the logic for creating and finding users in the database. It also adds friends to the database.
-const driver = require('./neo4j');
+import driver from './neo4j.js';
 
 async function createUser(profile, active = true) { // Originally also took msid
   const session = driver.session();
@@ -99,4 +99,4 @@ async function findFriendsByUserId(fbid) {
   }
 }
 
-module.exports = { findOrCreateUser, findFriendsByUserId, addAllFriends };
+export { findOrCreateUser, findFriendsByUserId, addAllFriends };

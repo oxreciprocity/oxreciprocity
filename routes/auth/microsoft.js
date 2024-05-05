@@ -1,7 +1,7 @@
-const express = require('express');
-const passport = require('passport');
+import { Router } from 'express';
+import passport from 'passport';
 
-const router = express.Router();
+const router = Router();
 
 router.get('/', passport.authenticate('microsoft'));
 
@@ -11,4 +11,4 @@ router.get('/callback', passport.authenticate('microsoft', { failureRedirect: '/
     res.redirect('/');
   });
 
-module.exports = router;
+export default router;

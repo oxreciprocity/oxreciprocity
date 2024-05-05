@@ -1,11 +1,11 @@
 // This file contains the routes for the homepage of the app.
 // It renders a different view depending on whether the user is logged in with Facebook, Microsoft, or not at all.
 
-const express = require('express');
-const { findFriendsByUserId } = require('../db/userRepository');
-const { getMatches } = require('../controllers/relationshipController');
-const { updateUserFriends } = require('../services/friendService');
-const router = express.Router();
+import { Router } from 'express';
+import { findFriendsByUserId } from '../db/userRepository.js';
+import { getMatches } from '../controllers/relationshipController.js';
+import { updateUserFriends } from '../services/friendService.js';
+const router = Router();
 
 router.get('/', async function (req, res, next) {
   if (req.session.fbAuth) {
@@ -24,4 +24,4 @@ router.get('/', async function (req, res, next) {
   }
 });
 
-module.exports = router;
+export default router;

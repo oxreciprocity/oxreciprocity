@@ -1,8 +1,8 @@
-const passport = require('passport');
-const FacebookStrategy = require('passport-facebook').Strategy;
-const userRepository = require('../db/userRepository');
+import passport from 'passport';
+import { Strategy as FacebookStrategy } from 'passport-facebook';
+import { findOrCreateUser } from '../db/userRepository.js';
 
-module.exports = function () {
+export default function () {
   passport.use(new FacebookStrategy({
     clientID: process.env.FB_CLIENT_ID,
     clientSecret: process.env.FB_CLIENT_SECRET,
@@ -11,7 +11,7 @@ module.exports = function () {
   },
     function (accessToken, refreshToken, profile, cb) {
       profile.accessToken = accessToken;
-      userRepository.findOrCreateUser(profile, accessToken)
+      findOrCreateUser(profile, accessToken)
         .then(() => cb(null, profile)) // Proceed with the callback
         .catch(error => cb(error)); // Handle any errors
     }

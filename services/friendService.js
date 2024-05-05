@@ -1,7 +1,7 @@
 // Updates the user's friends list in the database
 
-const { fetchFacebookFriends } = require('./facebookService');
-const { addAllFriends } = require('../db/userRepository');
+import { fetchFacebookFriends } from './facebookService.js';
+import { addAllFriends } from '../db/userRepository.js';
 
 async function updateUserFriends(userId, accessToken) {
     let friendsListFbIds = await fetchFacebookFriends(userId, accessToken);
@@ -9,4 +9,4 @@ async function updateUserFriends(userId, accessToken) {
     await addAllFriends(userId, friendsListFbIds);
 }
 
-module.exports = { updateUserFriends };
+export { updateUserFriends };

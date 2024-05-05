@@ -1,7 +1,7 @@
-const passport = require('passport');
-const MicrosoftStrategy = require('passport-microsoft').Strategy;
+import passport from 'passport';
+import { Strategy as MicrosoftStrategy } from 'passport-microsoft';
 
-module.exports = function () {
+export default function () {
   passport.use(new MicrosoftStrategy({
     clientID: process.env.MS_CLIENT_ID,
     clientSecret: process.env.MS_CLIENT_SECRET,

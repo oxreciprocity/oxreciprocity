@@ -1,7 +1,7 @@
-const facebookStrategy = require('./facebookStrategy');
-const microsoftStrategy = require('./microsoftStrategy');
+import facebookStrategy from './facebookStrategy.js';
+import microsoftStrategy from './microsoftStrategy.js';
 
-module.exports = function (passport) {
+export default function (passport) {
   // Passport serialization and deserialization logic here
   passport.serializeUser(function (user, cb) {
     cb(null, user); // TODO replace with user.id or something
