@@ -23,39 +23,6 @@ async function changeRelationship(userFbid, targetFbid, levels) {
   }
 }
 
-// async function findMatches(userFbid) {
-//   const session = driver.session();
-//   try {
-//     /*const query = `
-//     MATCH (user:User {fbid: $userFbid})-[userToFriend:FRIENDS]->(friend:User)<-[friendToUser:FRIENDS]-(user)
-//     WHERE userToFriend.r1 = friendToUser.r1 AND userToFriend.r1 = true
-//       OR userToFriend.r2 = friendToUser.r2 AND userToFriend.r2 = true
-//       OR userToFriend.r3 = friendToUser.r3 AND userToFriend.r3 = true
-//     RETURN
-//       COLLECT(DISTINCT CASE WHEN userToFriend.r1 = true THEN friend.fbid END) AS r1Matches,
-//       COLLECT(DISTINCT CASE WHEN userToFriend.r2 = true THEN friend.fbid END) AS r2Matches,
-//       COLLECT(DISTINCT CASE WHEN userToFriend.r3 = true THEN friend.fbid END) AS r3Matches
-//     `;*/
-//     const result = await session.run(query, { userFbid });
-//     console.log("matching result: ", result.records)
-//     if (result.records.length === 0) {
-//       // No matches found
-//       return { r1: [], r2: [], r3: [] };
-//     }
-
-//     const record = result.records[0];
-//     const matches = {
-//       r1: record.get('r1Matches').filter(id => id !== null), // Filter out nulls
-//       r2: record.get('r2Matches').filter(id => id !== null),
-//       r3: record.get('r3Matches').filter(id => id !== null),
-//     };
-
-//     return matches;
-//   } finally {
-//     await session.close();
-//   }
-// }
-
 async function findMatches(userFbid) {
   const session = driver.session();
   const rMatchesQuery = `

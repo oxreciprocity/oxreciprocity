@@ -82,7 +82,6 @@ async function findFriendsByUserId(fbid) {
          RETURN friend, rel.r1 AS r1, rel.r2 AS r2, rel.r3 AS r3`,
         { fbid }
     );
-    console.log('cypher result', result.records)
     // Adjusting the mapping to include relationship properties
     return result.records.map(record => {
         return {

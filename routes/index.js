@@ -9,20 +9,17 @@ const router = express.Router();
 
 router.get('/', async function(req, res, next) {
   if (req.session.fbAuth) {
-    console.log('user is logged in with Facebook', req.user);
-    console.log("req.user: ", req.user)
+    console.log('user is logged in with Facebook');
     const { id, accessToken } = req.user;
     await updateUserFriends(id, accessToken);
     const friends = await findFriendsByUserId(id);
     const matches = await getMatches(id);
-    console.log("matches: ", matches)
-    console.log('friends:', friends);
     res.render('loggedIn', { user: req.user, friends: friends, matches: matches });
   } else if (req.session.msAuth) {
-    console.log('user is logged in with Microsoft', req.user);
+    console.log('user is logged in with Microsoft');
     res.render('innerLogin');
   } else {
-    console.log('user is not logged in', req.user);
+    console.log('user is not logged in');
     res.render('outerLogin');
   }
 });

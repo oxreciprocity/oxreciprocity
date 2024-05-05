@@ -5,7 +5,6 @@
 const { changeRelationship, findMatches } = require('../db/relationshipRepository');
 
 async function updateRelationship(req, res) {
-  console.log(req.body)
   try {
     const { userFbid, targetFbid, r1, r2, r3 } = req.body;
     // Ensure userFbid is the current user to prevent unauthorized changes
