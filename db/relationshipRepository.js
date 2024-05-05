@@ -23,6 +23,45 @@ async function changeRelationship(userFbid, targetFbid, levels) {
   }
 }
 
+async function storeMatches(userFbid, matches) { 
+  const session = driver.session();
+
+  try {
+    // Initialize a structure to hold the match levels for each matched user
+    let matchLevels = {};
+
+    // Populate the matchLevels with true for each level present for the user
+    for (const [level, userMatches] of Object.entries(matches)) {
+      userMatches.forEach(match => {
+        if (!matchLevels[match.fbid]) {
+          matchLevels[match.fbid] = { r1: false, r2: false, r3: false };
+        }
+        matchLevels[match.fbid][level] = true;
+      });
+    }
+
+    // Now, iterate over matchLevels to create or update a single MATCHED relationship with levels as properties
+    for (const [matchFbid, levels] of Object.entries(matchLevels)) {
+      await session.run(
+        `MATCH (currentUser:User {fbid: $userFbid}), (matchedUser:User {fbid: $matchFbid})
+         MERGE (currentUser)-[rel:MATCHED]->(matchedUser)
+         ON CREATE SET rel.r1 = $levels.r1, rel.r2 = $levels.r2, rel.r3 = $levels.r3
+         ON MATCH SET rel.r1 = $levels.r1, rel.r2 = $levels.r2, rel.r3 = $levels.r3`,
+        {
+          userFbid,
+          matchFbid,
+          levels
+        }
+      );
+    }
+  } catch (error) {
+    console.error('Error storing matches:', error);
+    throw error;
+  } finally {
+    await session.close();
+  }
+}
+
 async function findMatches(userFbid) {
   const session = driver.session();
   const rMatchesQuery = `
@@ -47,6 +86,7 @@ async function findMatches(userFbid) {
         r2: record.get('r2').filter(item => item !== null),
         r3: record.get('r3').filter(item => item !== null),
       };
+      await storeMatches(userFbid, matches);
       return matches;
     } else {
       return { r1: [], r2: [], r3: [] };

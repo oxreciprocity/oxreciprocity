@@ -20,6 +20,7 @@
 ## Features
 - TODO: reminder when X friends have signed up
 - TODO: Build rate limiter to prevent spam
+  - If we only display one match at a time, we should make sure that both A and B are presented with that match
 
 ## Code tidiness
 - TODO: file structure, use of controllers, auth routers (e.g. auth/index.js)
@@ -32,4 +33,7 @@ CREATE (:User {fbid: "1", name: "Jane Roe", active: TRUE})
 
 MATCH (a)-[rel:FRIENDS]-(b)
 WHERE a.fbid = "0" AND b.fbid = "876336624537422"
-SET rel.r1 = true
+SET rel.r1 = true, rel.r2 = true;
+
+MATCH (user:User {fbid: "876336624537422"})
+SET user.lastMatchUpdate = "1970-01-01T00:00:00.000Z"
