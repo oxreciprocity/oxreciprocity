@@ -23,8 +23,6 @@
 
 ## Code tidiness
 - TODO: file structure, use of controllers, auth routers (e.g. auth/index.js)
-- TODO: consistency around async operations (use async/await rather than .then)
-- TODO: switch to ES module imports
 
 ## resetting database
 MATCH(n)

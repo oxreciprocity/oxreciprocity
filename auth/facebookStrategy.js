@@ -9,11 +9,14 @@ export default function () {
     callbackURL: process.env.FB_REDIRECT_URI,
     state: true
   },
-    function (accessToken, refreshToken, profile, cb) {
-      profile.accessToken = accessToken;
-      findOrCreateUser(profile, accessToken)
-        .then(() => cb(null, profile)) // Proceed with the callback
-        .catch(error => cb(error)); // Handle any errors
+    async (accessToken, refreshToken, profile, cb) => {
+      try {
+        profile.accessToken = accessToken;
+        await findOrCreateUser(profile, accessToken);
+        return cb(null, profile);
+      } catch (error) {
+        cb(error); // Handle any errors
+      }
     }
   ));
 };
