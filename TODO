@@ -6,6 +6,7 @@
 - TODO: Enable HTTPS
 - MAYBE: After someone's created an account, they don't really need to log in using their MSID -
   maybe there's a quicker flow with only FB auth?
+- TODO: check the submit and matches endpoints are secure
 
 ## UI
 - TODO: Build logic to get names+profile pictures(+profile urls?) from Facebook
@@ -19,8 +20,9 @@
 
 ## Features
 - TODO: reminder when X friends have signed up
-- TODO: Build rate limiter to prevent spam
-  - If we only display one match at a time, we should make sure that both A and B are presented with that match
+- TODO: only display one match at a time
+  - We should make sure that both A and B are presented with that match
+- TODO: Account deletion
 
 ## Code tidiness
 - TODO: file structure, use of controllers, auth routers (e.g. auth/index.js)
@@ -31,9 +33,19 @@ DETACH DELETE n;
 CREATE (:User {fbid: "0", name: "John Doe", active: TRUE})
 CREATE (:User {fbid: "1", name: "Jane Roe", active: TRUE})
 
+MATCH (a:User {fbid: "876336624537422"}), (b:User)
+WHERE b.fbid IN ["0", "1"]
+MERGE (a)-[rOut:FRIENDS]->(b)
+  ON CREATE SET rOut.r1 = False, rOut.r2 = False, rOut.r3 = False
+MERGE (a)<-[rInv:FRIENDS]-(b)
+  ON CREATE SET rInv.r1 = False, rInv.r2 = False, rInv.r3 = False
+
 MATCH (a)-[rel:FRIENDS]-(b)
 WHERE a.fbid = "0" AND b.fbid = "876336624537422"
 SET rel.r1 = true, rel.r2 = true;
+MATCH (a)-[rel:FRIENDS]-(b)
+WHERE a.fbid = "1" AND b.fbid = "876336624537422"
+SET rel.r3 = true, rel.r2 = true;
 
 MATCH (user:User {fbid: "876336624537422"})
 SET user.lastMatchUpdate = "1970-01-01T00:00:00.000Z"
