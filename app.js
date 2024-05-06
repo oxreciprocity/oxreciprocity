@@ -27,6 +27,7 @@ import indexRouter from './routes/index.js';
 import microsoftRoutes from './routes/auth/microsoft.js';
 import facebookRoutes from './routes/auth/facebook.js';
 import submitRouter from './routes/submit.js';
+import matchesRouter from './routes/matches.js';
 
 const app = express();
 authConfig(passport);
@@ -87,6 +88,8 @@ app.use('/auth/login', function (req, res) {
 });
 
 app.use('/submit', submitRouter);
+app.use('/matches', matchesRouter);
+
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

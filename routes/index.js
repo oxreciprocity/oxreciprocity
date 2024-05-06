@@ -2,8 +2,7 @@
 // It renders a different view depending on whether the user is logged in with Facebook, Microsoft, or not at all.
 
 import { Router } from 'express';
-import { findFriendsByUserId } from '../db/userRepository.js';
-import { getMatches } from '../controllers/relationshipController.js';
+import { findFriendsByUserId, getExistingMatches } from '../db/userRepository.js';
 import { updateUserFriends } from '../services/friendService.js';
 const router = Router();
 
@@ -13,7 +12,7 @@ router.get('/', async function (req, res, next) {
     const { id, accessToken } = req.user;
     await updateUserFriends(id, accessToken);
     const friends = await findFriendsByUserId(id);
-    const matches = await getMatches(id);
+    const matches = await getExistingMatches(id); // Don't automatically update matches; let the user decide when to do so
     res.render('loggedIn', { user: req.user, friends: friends, matches: matches });
   } else if (req.session.msAuth) {
     console.log('user is logged in with Microsoft');

@@ -86,7 +86,6 @@ async function findMatches(userFbid) {
         r2: record.get('r2').filter(item => item !== null),
         r3: record.get('r3').filter(item => item !== null),
       };
-      await storeMatches(userFbid, matches);
       return matches;
     } else {
       return { r1: [], r2: [], r3: [] };
@@ -99,4 +98,4 @@ async function findMatches(userFbid) {
   }
 }
 
-export { changeRelationship, findMatches };
+export { changeRelationship, findMatches, storeMatches };

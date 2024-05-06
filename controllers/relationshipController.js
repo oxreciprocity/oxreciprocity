@@ -2,7 +2,7 @@
 
 // This file is called after a POST request submitting new relationships is made to the server
 
-import { changeRelationship, findMatches } from '../db/relationshipRepository.js';
+import { changeRelationship, findMatches, storeMatches } from '../db/relationshipRepository.js';
 import { getLastMatchUpdate, getExistingMatches, setLastMatchUpdate } from '../db/userRepository.js';
 
 
@@ -42,6 +42,7 @@ async function getMatches(userId) {
       // If it's been at least a week, proceed to find and return new matches
       console.log('Finding new matches')
       const newMatches = await findMatches(userId);
+      await storeMatches(userId, newMatches);
       // Update the user's last match update timestamp in the database
       setLastMatchUpdate(userId, now.toISOString());
       return newMatches;
