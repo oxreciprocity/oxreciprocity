@@ -18,6 +18,22 @@ async function createUser(profile, active = true) { // Originally also took msid
   }
 }
 
+async function deleteUser(userFbid) {
+  const session = driver.session();
+
+  try {
+    await session.run(
+      'MATCH (user:User {fbid: $userFbid}) DETACH DELETE user',
+      { userFbid }
+    );
+  } catch (error) {
+    console.error('Error deleting user:', error);
+    throw error;
+  } finally {
+    await session.close();
+  }
+}
+
 async function addAllFriends(userFbid, friendsFbids) {
   const session = driver.session();
   const query = `
@@ -131,7 +147,6 @@ async function getExistingMatches(fbid) {
 `;
   try {
     const result = await session.run(existingMatchesQuery, { fbid });
-    console.log("existing matches: ", result.records)
     if (result.records.length > 0) {
       const record = result.records[0];
       let matches = {
@@ -166,4 +181,4 @@ async function setLastMatchUpdate(fbid, timestamp) {
   }
 }
 
-export { findOrCreateUser, findFriendsByUserId, addAllFriends, getLastMatchUpdate, getExistingMatches, setLastMatchUpdate};
+export { findOrCreateUser, findFriendsByUserId, addAllFriends, getLastMatchUpdate, getExistingMatches, setLastMatchUpdate, deleteUser};

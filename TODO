@@ -22,7 +22,6 @@
 - TODO: reminder when X friends have signed up
 - TODO: only display one match at a time
   - We should make sure that both A and B are presented with that match
-- TODO: Account deletion
 
 ## Code tidiness
 - TODO: file structure, use of controllers, auth routers (e.g. auth/index.js)

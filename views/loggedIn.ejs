@@ -16,6 +16,10 @@
     <button class="logout" type="submit">Sign out</button>
     <input type="hidden" name="_csrf" value="<%= csrfToken %>">
   </form>
+  <form action="/account/delete" method="post" class="delete-account">
+    <button class="logout" type="submit">Delete your account</button>
+    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+  </form>
   <h2>My Friends</h2>
   <%- include('partials/friendsList') %>
 
