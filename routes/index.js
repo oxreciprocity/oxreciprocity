@@ -16,7 +16,7 @@ router.get('/', async function (req, res, next) {
     await updateUserFriends(id, accessToken);
     const friends = await findFriendsByUserId(id);
     const friendsWithPics = await enrichFriendsWithPics(friends);
-    res.render('loggedIn', { user: req.user, friends: friendsWithPics });
+    res.render('index', { user: req.user, friends: friendsWithPics });
   } else if (req.session.msAuth) {
     console.log('user is logged in with Microsoft');
     console.log("authentication status: ", req.isAuthenticated());
