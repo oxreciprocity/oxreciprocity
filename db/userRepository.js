@@ -181,4 +181,41 @@ async function setLastMatchUpdate(fbid, timestamp) {
   }
 }
 
-export { findOrCreateUser, findFriendsByUserId, addAllFriends, getLastMatchUpdate, getExistingMatches, setLastMatchUpdate, deleteUser};
+async function getPrefTimestamps(fbid) {
+  const session = driver.session();
+  try {
+    const result = await session.run(
+      `MATCH (user:User {fbid: $fbid})
+       RETURN user.submissionTimestamps AS timestamp`,
+      { fbid }
+    );
+    return result.records[0].get('timestamp');
+  } catch (error) {
+    console.error('Error getting pref timestamps:', error);
+    throw error;
+  } finally {
+    await session.close();
+  }
+}
+
+async function appendPrefTimestamp(fbid, timestamp) {
+  const session = driver.session();
+  try {
+    await session.run(
+      `MATCH (user:User {fbid: $fbid})
+       SET user.submissionTimestamps = coalesce(user.submissionTimestamps, []) + $timestamp`,
+      { fbid, timestamp }
+    );
+  } catch (error) {
+    console.error('Error appending pref timestamp:', error);
+    throw error;
+  } finally {
+    await session.close();
+  }
+}
+
+export { 
+  findOrCreateUser, deleteUser, findFriendsByUserId, addAllFriends, 
+  getLastMatchUpdate, getExistingMatches, setLastMatchUpdate,
+  getPrefTimestamps, appendPrefTimestamp
+};
