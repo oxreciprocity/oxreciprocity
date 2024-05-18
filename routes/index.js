@@ -3,7 +3,6 @@
 
 import { Router } from 'express';
 import { findFriendsByUserId } from '../db/userRepository.js';
-import { getMatches } from '../controllers/relationshipController.js';
 import { updateUserFriends } from '../services/friendService.js';
 import { enrichFriendsWithPics } from '../services/facebookService.js';
 
@@ -12,17 +11,19 @@ const router = Router();
 router.get('/', async function (req, res, next) {
   if (req.session.fbAuth) {
     console.log('user is logged in with Facebook');
+    console.log("authentication status: ", req.isAuthenticated());
     const { id, accessToken } = req.user;
     await updateUserFriends(id, accessToken);
     const friends = await findFriendsByUserId(id);
     const friendsWithPics = await enrichFriendsWithPics(friends);
-    const matches = await getMatches(id); // Automatically update matches on refresh
-    res.render('loggedIn', { user: req.user, friends: friendsWithPics, matches: matches });
+    res.render('loggedIn', { user: req.user, friends: friendsWithPics });
   } else if (req.session.msAuth) {
     console.log('user is logged in with Microsoft');
+    console.log("authentication status: ", req.isAuthenticated());
     res.render('innerLogin');
   } else {
     console.log('user is not logged in');
+    console.log("authentication status: ", req.isAuthenticated());
     res.render('outerLogin');
   }
 });

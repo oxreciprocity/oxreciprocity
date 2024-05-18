@@ -29,6 +29,7 @@ import facebookRoutes from './routes/auth/facebook.js';
 import basicRoutes from './routes/auth/local.js';
 import submitRouter from './routes/submit.js';
 import accountRouter from './routes/account.js';
+import matchesRouter from './routes/matches.js';
 
 const app = express();
 authConfig(passport);
@@ -82,6 +83,7 @@ app.use('/auth/logout', function (req, res) {
     res.redirect('/');
   });
 });
+
 app.use('/auth/login', function (req, res) {
   if (req.session.msAuth) {
     res.redirect('/auth/facebook');
@@ -90,9 +92,14 @@ app.use('/auth/login', function (req, res) {
   }
 });
 
-app.use('/submit', submitRouter);
-app.use('/account', accountRouter);
+function ensureAuthenticated(req, res, next) {
+  if (req.session.fbAuth) { return next(); }
+  res.redirect('/');
+}
 
+app.use('/submit', ensureAuthenticated, submitRouter);
+app.use('/account', ensureAuthenticated, accountRouter);
+app.use('/matches', ensureAuthenticated, matchesRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
