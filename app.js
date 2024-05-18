@@ -26,6 +26,7 @@ const SQLiteStore = connectSQLite3(session);
 import indexRouter from './routes/index.js';
 import microsoftRoutes from './routes/auth/microsoft.js';
 import facebookRoutes from './routes/auth/facebook.js';
+import basicRoutes from './routes/auth/local.js';
 import submitRouter from './routes/submit.js';
 import matchesRouter from './routes/matches.js';
 import accountRouter from './routes/account.js';
@@ -74,6 +75,8 @@ app.use('/', indexRouter);
 // NOTE maybe this should be in a separate file
 app.use('/auth/microsoft', microsoftRoutes);
 app.use('/auth/facebook', facebookRoutes);
+app.use('/auth/local', basicRoutes); // Login for test users
+
 app.use('/auth/logout', function (req, res) {
   req.logout(function (err) {
     if (err) { return next(err); }
