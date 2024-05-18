@@ -7,6 +7,41 @@
 - MAYBE: After someone's created an account, they don't really need to log in using their MSID -
   maybe there's a quicker flow with only FB auth?
 - TODO: check the submit and matches endpoints are secure
+### Facebook login
+- https://developers.facebook.com/devpolicy/#login
+> If your app uses a manual Facebook Login flow (i.e. if your app is not using our SDKs to enable Facebook Login), check the validity of the session every 24 hours and log users out if it is no longer valid. Our SDKs perform this check automatically.
+```javascript
+const validateFacebookSession = async (req, res, next) => {
+  const now = new Date();
+  if (req.user && req.user.lastChecked) {
+    const lastChecked = new Date(req.user.lastChecked);
+    const hoursSinceLastCheck = Math.abs(now - lastChecked) / 36e5; // Convert difference to hours
+
+    if (hoursSinceLastCheck > 24) {
+      // Need to validate session with Facebook
+      const appToken = 'YOUR_APP_ACCESS_TOKEN'; // You need to obtain this from your Facebook app settings
+      const userToken = req.user.facebookAccessToken; // The token you stored when the user logged in
+      const response = await fetch(`https://graph.facebook.com/debug_token?input_token=${userToken}&access_token=${appToken}`);
+      const data = await response.json();
+
+      if (!data.data.is_valid) {
+        // Token is not valid, log user out
+        req.logout(); // Using Passport's logout method
+        return res.redirect('/login'); // Redirect to login page
+      }
+
+      // If valid, update the lastChecked timestamp
+      req.user.lastChecked = new Date();
+    }
+  }
+
+  next();
+};
+
+// Use this middleware for routes that require an authenticated session
+app.use(validateFacebookSession);
+```
+
 
 ## UI
 - TODO: Build logic to get names+profile pictures(+profile urls?) from Facebook
@@ -29,8 +64,8 @@
 ## resetting database
 MATCH(n)
 DETACH DELETE n;
-CREATE (:User {fbid: "0", name: "John Doe", active: TRUE})
-CREATE (:User {fbid: "1", name: "Jane Roe", active: TRUE})
+CREATE (:User {fbid: "0", name: "John Doe"})
+CREATE (:User {fbid: "1", name: "Jane Roe"})
 
 MATCH (a:User {fbid: "876336624537422"}), (b:User)
 WHERE b.fbid IN ["0", "1"]
