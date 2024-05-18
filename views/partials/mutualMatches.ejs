@@ -1,8 +1,4 @@
-<p> Click below to update your matches. You can only do this once a week!</p>
-<form action="/matches" method="post">
-  <button class="update-matches" type="submit">Update my matches</button>
-  <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-</form>
+<p>Here are all your matches!</p>
 <% Object.entries(matches).forEach(function([key, value]) { %>
   <h3><%= key %></h3>
   <% if (value.length > 0) { %>
