@@ -1,5 +1,7 @@
 import facebookStrategy from './facebookStrategy.js';
 import microsoftStrategy from './microsoftStrategy.js';
+import localStrategy from './localStrategy.js';
+
 
 export default function (passport) {
   // Passport serialization and deserialization logic here
@@ -12,4 +14,5 @@ export default function (passport) {
   });
   facebookStrategy();
   microsoftStrategy();
+  localStrategy();
 };

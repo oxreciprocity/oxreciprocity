@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Homepage</title>
+</head>
+
+<body>
+  <p>Welcome to Oxreciprocity. Please log in using the test credentials.</p>
+  <form action="/auth/local" method="post">
+    <div><label>Username:</label><input type="text" name="username" /></div>
+    <div><label>Password:</label><input type="password" name="password" /></div>
+    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+    <div><input type="submit" value="Log In" /></div>
+  </form>
+</body>
+
+</html>
+
