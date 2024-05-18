@@ -28,7 +28,6 @@ import microsoftRoutes from './routes/auth/microsoft.js';
 import facebookRoutes from './routes/auth/facebook.js';
 import basicRoutes from './routes/auth/local.js';
 import submitRouter from './routes/submit.js';
-import matchesRouter from './routes/matches.js';
 import accountRouter from './routes/account.js';
 
 const app = express();
@@ -92,7 +91,6 @@ app.use('/auth/login', function (req, res) {
 });
 
 app.use('/submit', submitRouter);
-app.use('/matches', matchesRouter);
 app.use('/account', accountRouter);
 
 
