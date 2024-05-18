@@ -45,28 +45,13 @@ async function updateRelationship(req, res) {
 }
 
 async function getMatches(userId) {
-  // Retrieve the user's last match update timestamp from the database
-  const lastMatchUpdate = await getLastMatchUpdate(userId);
-
-  // Calculate the difference between the current time and the last update
-  const oneWeek = 7 * 24 * 60 * 60 * 1000; // One week in milliseconds
   const now = new Date();
-  const lastUpdateDate = new Date(lastMatchUpdate); // if null, defaults to 1970-01-01
-  const timeSinceLastUpdate = now - lastUpdateDate;
-
-  if (timeSinceLastUpdate < oneWeek) {
-      // If it's been less than a week, return the existing matches without querying the database again
-      console.log('Returning existing matches')
-      return getExistingMatches(userId);
-  } else {
-      // If it's been at least a week, proceed to find and return new matches
-      console.log('Finding new matches')
-      const newMatches = await findMatches(userId);
-      await storeMatches(userId, newMatches);
-      // Update the user's last match update timestamp in the database
-      setLastMatchUpdate(userId, now.toISOString());
-      return newMatches;
-  }
+  console.log('Finding new matches')
+  const newMatches = await findMatches(userId);
+  await storeMatches(userId, newMatches);
+  // Update the user's last match update timestamp in the database
+  setLastMatchUpdate(userId, now.toISOString());
+  return newMatches;
 }
 
 export { updateRelationship, getMatches };
