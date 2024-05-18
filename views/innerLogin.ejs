@@ -4,12 +4,33 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<style>
+		body {
+			display: flex;
+			flex-direction: column;
+			align-items: center; /* Center items horizontally */
+			justify-content: center; /* Center items vertically */
+			height: 100vh; /* Use full viewport height */
+			gap: 20px; /* Add space between elements */
+		}
+
+		.fb-login-btn {
+			background-color: #1877F2;
+			color: white;
+			padding: 10px 20px;
+			border: none;
+			text-align: center;
+			font-size: 16px;
+			cursor: pointer;
+			text-decoration: none;
+		}
+	</style>
 	<title>Homepage</title>
 </head>
 
 <body>
 	<p>Thanks for verifying your email. Please now log in with Facebook.</p>
-	<a class="button" href="/auth/login">Sign in</a>
+	<a href="/auth/login" class="fb-login-btn">Login with Facebook</a>
 	<form action="/auth/logout" method="post">
 		<button class="logout" type="submit">Sign out</button>
 		<input type="hidden" name="_csrf" value="<%= csrfToken %>">
