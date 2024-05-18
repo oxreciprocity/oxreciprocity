@@ -4,8 +4,8 @@ import { fetchFacebookFriends } from './facebookService.js';
 import { addAllFriends } from '../db/userRepository.js';
 
 async function updateUserFriends(userId, accessToken) {
-    let friendsListFbIds = await fetchFacebookFriends(userId, accessToken);
-    await addAllFriends(userId, friendsListFbIds);
+    let friendsListFbids = await fetchFacebookFriends(userId, accessToken);
+    await addAllFriends(userId, friendsListFbids);
 }
 
 export { updateUserFriends };
