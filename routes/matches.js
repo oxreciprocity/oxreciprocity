@@ -9,7 +9,9 @@ router.get('/', async function (req, res, next) {
   console.log('user is logged in with Facebook');
   const { id, accessToken } = req.user;
   const matches = await getMatches(id);
-  res.render('matches', { user: req.user, matches: matches });
+  const currentPath = `${req.baseUrl}${req.path}`;
+  console.log("currentpath: ", currentPath)
+  res.render('matches', { user: req.user, matches: matches, currentPath: currentPath });
 });
 
 export default router;

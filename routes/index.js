@@ -9,6 +9,7 @@ import { enrichFriendsWithPics } from '../services/facebookService.js';
 const router = Router();
 
 router.get('/', async function (req, res, next) {
+  const currentPath = `${req.baseUrl}${req.path}`;
   if (req.session.fbAuth) {
     console.log('user is logged in with Facebook');
     console.log("authentication status: ", req.isAuthenticated());
@@ -16,7 +17,7 @@ router.get('/', async function (req, res, next) {
     await updateUserFriends(id, accessToken);
     const friends = await findFriendsByUserId(id);
     const friendsWithPics = await enrichFriendsWithPics(friends);
-    res.render('index', { user: req.user, friends: friendsWithPics });
+    res.render('index', { user: req.user, friends: friendsWithPics, currentPath: currentPath });
   } else if (req.session.msAuth) {
     console.log('user is logged in with Microsoft');
     console.log("authentication status: ", req.isAuthenticated());
