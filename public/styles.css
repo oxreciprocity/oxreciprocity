@@ -2,6 +2,16 @@
   position: relative;
 }
 
+.friends-container {
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; /* Smooth transition for hover effects */
+  cursor: pointer; /* Changes the mouse cursor to indicate the card is clickable */
+}
+
+.friends-container:hover {
+  transform: scale(1.05); /* Slightly enlarges the card */
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); /* Adds shadow for depth */
+}
+
 .card {
   display: flex;
   flex-direction: column;
@@ -29,6 +39,10 @@
 
 .overlay-content {
   text-align: center;
+}
+
+.form-check {
+  text-align: left; /* Aligns content to the left */
 }
 
 .logo {

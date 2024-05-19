@@ -1,11 +1,31 @@
-<p>Here are all your matches!</p>
 <% Object.entries(matches).forEach(function([key, value]) { %>
-  <h3><%= key %></h3>
+  <div class="row">
+    <div class="col">
+      <h2><%= categoryNames[key] %></h2>
+    </div>
+  </div>
   <% if (value.length > 0) { %>
-    <% value.forEach(function(match) { %>
-      <p><%= match.name %></p>
-    <% }); %>
+    <div class="row">
+      <% value.forEach(function(match) { %>
+        <div class="col-6 col-md-3 mb-4">
+          <div class="card-container matches-container">
+          <div class="card h-100" style="background-image: url('<%= match.picUrl %>');">
+            <div class="card-body text-center">
+              <h5 class="card-title"><%= match.name %></h5>
+            </div>
+          </div>
+        </div>
+      </div>
+      <% }); %>
+    </div>
   <% } else { %>
-    <p>No matches found.</p>
+    <div class="row">
+      <div class="col">
+        <p>No matches found.</p>
+      </div>
+    </div>
   <% } %>
 <% }); %>
+
+
+

@@ -31,4 +31,13 @@ const enrichFriendsWithPics = async (friends) => {
     return Promise.all(enrichedFriendsPromises);
 }
 
-export { fetchFacebookFriends, enrichFriendsWithPics };
+const enrichMatchesWithPics = async (matches) => {
+    // Iterate through each category in matches
+    for (let category of Object.keys(matches)) {
+        // Enrich the friends list for the current category
+        matches[category] = await enrichFriendsWithPics(matches[category]);
+    }
+    return matches;
+}
+
+export { fetchFacebookFriends, enrichFriendsWithPics, enrichMatchesWithPics };

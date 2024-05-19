@@ -1,12 +1,13 @@
   <div class="row mb-4">
     <div class="col">
       <h2>My Friends</h2>
+      <p>Click on each picture to open up the checkboxes, and then either cancel or save.</p>
     </div>
   </div>
   <div class="row">
     <% friends.forEach(function(friend) { %>
     <div class="col-6 col-md-3 mb-4">
-      <div class="card-container">
+      <div class="card-container friends-container">
         <div class="card h-100" style="background-image: url('<%= friend.picUrl %>');">
           <div class="card-body text-center">
             <h5 class="card-title"><%= friend.name %></h5>
@@ -19,18 +20,18 @@
                 <input type="hidden" name="targetFbid" value="<%= friend.fbid %>">
 
                 <!-- Checkboxes for Levels -->
-                <div class="d-flex justify-content-center mb-3">
-                  <div class="form-check me-3">
-                    <input class="form-check-input" type="checkbox" name="r1" value="true" id="r1-<%= friend.fbid %>" <%=friend.r1 ? 'checked' : '' %>>
-                    <label class="form-check-label" for="r1-<%= friend.fbid %>">R1</label>
-                  </div>
-                  <div class="form-check me-3">
-                    <input class="form-check-input" type="checkbox" name="r2" value="true" id="r2-<%= friend.fbid %>" <%=friend.r2 ? 'checked' : '' %>>
-                    <label class="form-check-label" for="r2-<%= friend.fbid %>">R2</label>
+                <div class="checkboxes-levels mb-3">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="r1" value="true" id="r1-<%= friend.fbid %>" <%= friend.r1 ? 'checked' : '' %>>
+                    <label class="form-check-label" for="r1-<%= friend.fbid %>"><%= categoryNames.r1 %></label>
                   </div>
                   <div class="form-check">
-                    <input class="form-check-input" type="checkbox" name="r3" value="true" id="r3-<%= friend.fbid %>" <%=friend.r3 ? 'checked' : '' %>>
-                    <label class="form-check-label" for="r3-<%= friend.fbid %>">R3</label>
+                    <input class="form-check-input" type="checkbox" name="r2" value="true" id="r2-<%= friend.fbid %>" <%= friend.r2 ? 'checked' : '' %>>
+                    <label class="form-check-label" for="r2-<%= friend.fbid %>"><%= categoryNames.r2 %></label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="r3" value="true" id="r3-<%= friend.fbid %>" <%= friend.r3 ? 'checked' : '' %>>
+                    <label class="form-check-label" for="r3-<%= friend.fbid %>"><%= categoryNames.r3 %></label>
                   </div>
                 </div>
                 <button type="button" class="btn btn-secondary cancel-btn">Cancel</button>

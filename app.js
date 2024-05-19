@@ -67,6 +67,7 @@ app.use(function (req, res, next) {
 
 app.use(function (req, res, next) {
   res.locals.csrfToken = req.csrfToken();
+  res.locals.categoryNames = { 'r1': 'Hang out', 'r2': 'Hook up', 'r3': 'Date' }; // "hold hands"
   next();
 });
 
