@@ -34,7 +34,13 @@ $(document).ready(function () {
         form.closest('.card-overlay').fadeOut();
       },
       error: function (xhr) {
-        showMessage(form.closest('.card-container'), 'Submission Failed: ' + xhr.responseText, 'error');
+        let message = 'Submission failed: ';
+        if (xhr.status === 429) {
+          message += "you can only express interest in three people per week.";
+        } else {
+          message += xhr.responseText;
+        }
+        showMessage(form.closest('.card-container'), message, 'error');
       }
     });
   });
@@ -47,17 +53,20 @@ $(document).ready(function () {
 
 function showMessage(container, message, type) {
   const messageElement = $('<div class="message"></div>').text(message);
+  let timeout;
   if (type === 'success') {
     messageElement.addClass('alert alert-success');
+    timeout = 3000;
   } else {
     messageElement.addClass('alert alert-danger');
+    timeout = 5000;
   }
   container.append(messageElement);
   setTimeout(() => {
     messageElement.fadeOut(500, function() {
       $(this).remove();
     });
-  }, 3000);
+  }, timeout);
 }
 
 // Function to restore the form to its initial state
