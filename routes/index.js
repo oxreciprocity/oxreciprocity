@@ -12,7 +12,6 @@ router.get('/', async function (req, res, next) {
   const currentPath = `${req.baseUrl}${req.path}`;
   if (req.session.fbAuth) {
     console.log('user is logged in with Facebook');
-    console.log("authentication status: ", req.isAuthenticated());
     const { id, accessToken } = req.user;
     await updateUserFriends(id, accessToken);
     const friends = await findFriendsByUserId(id);
@@ -20,11 +19,9 @@ router.get('/', async function (req, res, next) {
     res.render('index', { user: req.user, friends: friendsWithPics, currentPath: currentPath });
   } else if (req.session.msAuth) {
     console.log('user is logged in with Microsoft');
-    console.log("authentication status: ", req.isAuthenticated());
     res.render('innerLogin');
   } else {
     console.log('user is not logged in');
-    console.log("authentication status: ", req.isAuthenticated());
     res.render('outerLogin');
   }
 });
