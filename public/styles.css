@@ -46,3 +46,36 @@
   padding: 10px;
   border-radius: 5px;
 }
+
+.login-btn {
+  color: white; /* Adjust based on background color */
+  padding: 10px 20px;
+  border: none;
+  text-align: center;
+  font-size: 16px;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block; /* Ensures proper display with Bootstrap's .btn class */
+  transition: background-color 0.3s; /* Smooth transition for hover effect */
+}
+
+.login-btn:hover, .login-btn:focus {
+  color: white; /* Keep text color consistent */
+  text-decoration: none; /* Prevents underline on hover */
+}
+
+.fb-login {
+  background-color: #1877F2;
+}
+
+.fb-login:hover, .fb-login:focus {
+  background-color: #165DC0; /* Slightly darker shade of blue for the hover state */
+}
+
+.ms-login {
+  background-color: #5E5E5E; /* Microsoft logo gray, or use #F3F3F3 for a lighter approach */
+}
+
+.ms-login:hover, .ms-login:focus {
+  background-color: #7A7A7A; /* Darker shade for hover state */
+}

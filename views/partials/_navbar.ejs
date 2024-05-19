@@ -2,8 +2,16 @@
   <a href='/' class="mb-3 mb-md-0">
     <img src="https://oxheart.love/wp-content/uploads/2024/01/Facebook-cover.png" alt="Oxreciprocity logo" class="logo img-fluid">
   </a>
+  <% if (!user) { %>
+    <p class="user h4 mb-3 mb-md-0 text-center text-md-start">
+      Oxreciprocity
+    </p>
+    <div class="text-center text-md-end">
+      <button class="btn btn-outline-secondary mb-3 mb-md-0" type="button">Contact</button>
+    </div>
+  <% } else if (user.provider === 'facebook'){ %>
   <p class="user h4 mb-3 mb-md-0 text-center text-md-start">
-    <%= user.displayName %>
+    Oxreciprocity - logged in as <%= user.displayName %>
   </p>
   <div class="text-center text-md-end">
     <% if (currentPath !== '/matches/') { %>
@@ -20,5 +28,15 @@
       <input type="hidden" name="_csrf" value="<%= csrfToken %>">
     </form>
   </div>
+  <% } else if (user.provider === 'microsoft') { %>
+    <p class="user h4 mb-3 mb-md-0 text-center text-md-start">
+      Oxreciprocity
+    </p>
+    <div class="text-center text-md-end">
+      <form action="/auth/logout" method="post" class="d-inline">
+        <button class="btn btn-outline-secondary mb-3 mb-md-0" type="submit">Sign out</button>
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+      </form>
+    </div>
+  <% } %>
 </div>
-

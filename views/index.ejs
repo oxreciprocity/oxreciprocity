@@ -4,16 +4,10 @@
 <%- include('partials/_head', { title: 'Home' }) %>
 
 <body>
-  
   <div class="container mt-4">
     <%- include('partials/_navbar') %>
     <h1>Welcome to Oxreciprocity</h1>
-    <div class="about-info mb-4">
-      <h2>About</h2>
-      <p>Oxreciprocity is a platform to find matches - romantic or platonic.
-        You check boxes, your friends do the same, and we'll let you know when the feeling's mutual.
-        You can check boxes on up to three people per week, and find out whether it's a match right away.</p>
-    </div>
+    <%- include('partials/_about') %>
     <div class="friends-list">
       <%- include('partials/_friendsList') %>
     </div>

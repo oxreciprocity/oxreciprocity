@@ -19,10 +19,10 @@ router.get('/', async function (req, res, next) {
     res.render('index', { user: req.user, friends: friendsWithPics, currentPath: currentPath });
   } else if (req.session.msAuth) {
     console.log('user is logged in with Microsoft');
-    res.render('innerLogin');
+    res.render('innerLogin', { user: req.user, currentPath: currentPath });
   } else {
     console.log('user is not logged in');
-    res.render('outerLogin');
+    res.render('outerLogin', { user: null, currentPath: currentPath });
   }
 });
 
