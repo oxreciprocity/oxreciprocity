@@ -13,7 +13,6 @@ router.get('/', async function (req, res, next) {
   const matches = await getMatches(id);
   const matchesWithPics = await enrichMatchesWithPics(matches);
   const currentPath = `${req.baseUrl}${req.path}`;
-  console.log("matches: ", matches)
   res.render('matches', { user: req.user, matches: matchesWithPics, currentPath: currentPath });
 });
 
