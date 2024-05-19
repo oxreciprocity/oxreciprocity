@@ -1,16 +1,17 @@
 <!doctype html>
 <html lang="en">
 
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Homepage</title>
-</head>
+<%- include('partials/_head', { title: 'Matches' }) %>
+
 
 <body>
-  <div>
-    <h2>Matches</h2>
-    <%- include('partials/mutualMatches') %>
+  <%- include('partials/_scripts') %>
+  <div class="container mt-4">
+    <%- include('partials/_navbar') %>
+    <div>
+      <h1>Your matches</h1>
+      <%- include('partials/mutualMatches') %>
+    </div>
   </div>
 </body>
 
