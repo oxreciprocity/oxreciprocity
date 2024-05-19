@@ -4,7 +4,7 @@ import passport from 'passport';
 const router = Router();
 
 router.get('/', (req, res) => {
-  res.render('testLogin');
+  res.render('testLogin', { user: null});
 });
 
 router.post('/', passport.authenticate('local', {
