@@ -3,7 +3,7 @@
 // This file is called after a POST request submitting new relationships is made to the server
 
 import { changeRelationship, findMatches, storeMatches } from '../db/relationshipRepository.js';
-import { getLastMatchUpdate, getExistingMatches, setLastMatchUpdate, getPrefTimestamps, appendPrefTimestamp } from '../db/userRepository.js';
+import { setLastMatchUpdate, getPrefTimestamps, appendPrefTimestamp } from '../db/userRepository.js';
 
 
 // Check whether an additional call at currentTime would exceed the rate limit of maxCalls in period [currentTime - timeframe, currentTime]
