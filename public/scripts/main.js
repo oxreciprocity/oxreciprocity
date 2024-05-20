@@ -30,7 +30,7 @@ $(document).ready(function () {
       url: '/submit', // Your endpoint
       data: formData,
       success: function (response) {
-        showMessage(form.closest('.card-container'), 'Submission Successful!', 'success');
+        showMessage('Submission Successful!', 'success');
         form.closest('.card-overlay').fadeOut();
       },
       error: function (xhr) {
@@ -64,7 +64,7 @@ $(document).ready(function () {
         } else {
           message += xhr.responseText;
         }
-        showMessage(form.closest('.card-container'), message, 'error');
+        showMessage(message, 'error');
       }
     });
   });
@@ -75,10 +75,8 @@ $(document).ready(function () {
   });
 });
 
-function showMessage(container, message, type) {
-  const messageElement = $('<div class="message"></div>').text(message);
-  // Use .html() to ensure that the <br> tag is interpreted as HTML
-  messageElement.html(message);
+function showMessage(message, type) {
+  const messageElement = $('<div class="message"></div>').html(message);
   if (type === 'success') {
     messageElement.addClass('alert alert-success');
     // Set a timeout for success messages to fade out after 3 seconds
@@ -97,7 +95,7 @@ function showMessage(container, message, type) {
     });
   }
 
-  container.append(messageElement);
+  $('#message-container').append(messageElement);
 }
 
 // Function to restore the form to its initial state
