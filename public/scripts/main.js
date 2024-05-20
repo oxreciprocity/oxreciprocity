@@ -36,7 +36,31 @@ $(document).ready(function () {
       error: function (xhr) {
         let message = 'Submission failed: ';
         if (xhr.status === 429) {
-          message += "you can only express interest in three people per week.";
+          try {
+            // Parse the JSON response from the server
+            const response = JSON.parse(xhr.responseText);
+ 
+            // Construct a base message for rate limiting
+            message += "You can only express interest in three people per week. ";
+ 
+            // If retryTime is available, append a formatted retry time to the message
+            if (response.retryTime) {
+              // Convert retryTime to a Date object
+              const retryDate = new Date(response.retryTime);
+ 
+              // Format retryDate (adjust formatting as needed)
+              const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', timeZoneName: 'short' };
+              const readableDate = retryDate.toLocaleDateString("en-GB", options);
+ 
+              message += `Please try again on ${readableDate}. <br>(click to close)`;
+            } else {
+              // Fallback for when retryTime isn't specified in the response
+              message += "Please try again later.";
+            }
+          } catch (e) {
+            // Fallback in case of parsing error or unexpected response structure
+            message += "Please try again later.";
+          }
         } else {
           message += xhr.responseText;
         }
@@ -53,20 +77,27 @@ $(document).ready(function () {
 
 function showMessage(container, message, type) {
   const messageElement = $('<div class="message"></div>').text(message);
-  let timeout;
+  // Use .html() to ensure that the <br> tag is interpreted as HTML
+  messageElement.html(message);
   if (type === 'success') {
     messageElement.addClass('alert alert-success');
-    timeout = 3000;
+    // Set a timeout for success messages to fade out after 3 seconds
+    setTimeout(() => {
+      messageElement.fadeOut(500, function() {
+        $(this).remove();
+      });
+    }, 3000); // 3 seconds
   } else {
     messageElement.addClass('alert alert-danger');
-    timeout = 5000;
-  }
-  container.append(messageElement);
-  setTimeout(() => {
-    messageElement.fadeOut(500, function() {
-      $(this).remove();
+    // For failure messages, allow them to stay until clicked
+    messageElement.click(function() {
+      $(this).fadeOut(500, function() {
+        $(this).remove();
+      });
     });
-  }, timeout);
+  }
+
+  container.append(messageElement);
 }
 
 // Function to restore the form to its initial state

@@ -13,8 +13,16 @@ function checkRateLimit(timestamps, maxCalls, timeframe, currentTime) {
     const timestamp = new Date(timestampString).getTime();
     return currentTime - timestamp <= timeframe;
   });
-  // Check if adding another call would exceed the maxCalls limit
-  return relevantTimestamps.length < maxCalls;
+
+  const retryTime = relevantTimestamps.length >= maxCalls
+    ? new Date(new Date(relevantTimestamps[0]).getTime() + timeframe)
+    : null;
+
+  return {
+    isWithinLimit: relevantTimestamps.length < maxCalls, // Would adding another call exceed the maxCalls limit
+    retryTime: retryTime // Time in milliseconds
+  };
+  
 }
 
 async function updateRelationship(req, res) {
@@ -31,9 +39,13 @@ async function updateRelationship(req, res) {
     const maxMatches = 3;
     const timeframe = 7 * 24 * 60 * 60 * 1000; // One week in milliseconds
     const currentTime = new Date();
-    const rateLimitOk = checkRateLimit(prefTimestamps, maxMatches, timeframe, currentTime);
-    if (!rateLimitOk) {
-      return res.status(429).json({ success: false, message: "Rate limit exceeded" });
+    const { isWithinLimit, retryTime } = checkRateLimit(prefTimestamps, maxMatches, timeframe, currentTime);
+    if (!isWithinLimit) {
+      return res.status(429).json({
+        success: false,
+        message: "Rate limit exceeded",
+        retryTime: retryTime.toISOString() // Convert the retryTime to an ISO string
+      });
     }
     // Update the relationship in the database
     const relationshipCount = await changeRelationship(userFbid, targetFbid, { r1: r1 === 'true', r2: r2 === 'true', r3: r3 === 'true' })
