@@ -30,7 +30,7 @@ $(document).ready(function () {
       url: '/submit', // Your endpoint
       data: formData,
       success: function (response) {
-        showMessage('Submission Successful!', 'success');
+        showMessage(form.closest('.card-container'), 'Submission Successful!', 'success');
         form.closest('.card-overlay').fadeOut();
       },
       error: function (xhr) {
@@ -64,7 +64,7 @@ $(document).ready(function () {
         } else {
           message += xhr.responseText;
         }
-        showMessage(message, 'error');
+        showMessage(form.closest('.card-container'), message, 'error');
       }
     });
   });
@@ -75,7 +75,7 @@ $(document).ready(function () {
   });
 });
 
-function showMessage(message, type) {
+function showMessage(container, message, type) {
   const messageElement = $('<div class="message"></div>').html(message);
   if (type === 'success') {
     messageElement.addClass('alert alert-success');
@@ -95,7 +95,14 @@ function showMessage(message, type) {
     });
   }
 
-  $('#message-container').append(messageElement);
+  if ($(window).width() < 992) {
+    // On small screens, append to #message-container
+    $('#message-container').append(messageElement).show();
+  } else {
+    // On larger screens, append within the card container
+    container.find('.message').remove(); // Remove any existing message in the container
+    container.append(messageElement);
+  }
 }
 
 // Function to restore the form to its initial state
