@@ -7,7 +7,7 @@
       Oxreciprocity
     </p>
     <div class="text-center text-md-end">
-      <button class="btn btn-outline-secondary mb-3 mb-md-0" type="button">Contact</button>
+      <a href="mailto:oxreciprocity@oxheart.love"><button class="btn btn-outline-secondary mb-3 mb-md-0" type="button">Contact</button></a>
     </div>
   <% } else if (user.provider === 'facebook'){ %>
   <p class="user h4 mb-3 mb-md-0 text-center text-md-start">
@@ -15,10 +15,11 @@
   </p>
   <div class="text-center text-md-end">
     <% if (currentPath !== '/matches/') { %>
-      <a href="/matches"><button class="btn btn-outline-secondary mb-3 mb-md-0">My matches</button></a>
+      <a href="/matches"><button class="btn btn-secondary mb-3 mb-md-0">My matches</button></a>
     <% } else { %>
       <a href="/"><button class="btn btn-outline-secondary mb-3 mb-md-0">Home</button></a>
     <% } %>
+    <a href="mailto:oxreciprocity@oxheart.love"><button class="btn btn-outline-secondary mb-3 mb-md-0" type="button">Contact</button></a>
     <form action="/auth/logout" method="post" class="d-inline">
       <button class="btn btn-outline-secondary mb-3 mb-md-0" type="submit">Sign out</button>
       <input type="hidden" name="_csrf" value="<%= csrfToken %>">
@@ -33,6 +34,7 @@
       Oxreciprocity
     </p>
     <div class="text-center text-md-end">
+      <a href="mailto:oxreciprocity@oxheart.love"><button class="btn btn-outline-secondary mb-3 mb-md-0" type="button">Contact</button></a>
       <form action="/auth/logout" method="post" class="d-inline">
         <button class="btn btn-outline-secondary mb-3 mb-md-0" type="submit">Sign out</button>
         <input type="hidden" name="_csrf" value="<%= csrfToken %>">
