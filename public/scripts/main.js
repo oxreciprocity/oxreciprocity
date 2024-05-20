@@ -1,5 +1,6 @@
 // This code is just relevant for the card overlay functionality on the index page
 $(document).ready(function () {
+  // Add click handler for the card
   $('.card').click(function () {
     const overlay = $(this).find('.card-overlay');
     if (overlay.css('display') === 'none') {
@@ -19,6 +20,7 @@ $(document).ready(function () {
     });
   });
 
+  // Add submit handler for the form
   $('.card-overlay form').submit(function (event) {
     event.preventDefault(); // Prevent default form submission
 
@@ -72,6 +74,14 @@ $(document).ready(function () {
   // Prevent form click from closing the overlay
   $('.overlay-content').click(function(event) {
     event.stopPropagation();
+  });
+
+  // Confirmation dialogue for deleting account
+  $('#delete-account-form').submit(function (event) {
+    const confirmation = confirm('Are you sure you want to delete your account? This action cannot be undone.');
+    if (!confirmation) {
+      event.preventDefault();
+    }
   });
 });
 
