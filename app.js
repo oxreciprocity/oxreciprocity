@@ -15,6 +15,7 @@ import { Datastore } from '@google-cloud/datastore';
 import { DatastoreStore } from '@google-cloud/connect-datastore';
 import connectSQLite3 from 'connect-sqlite3';
 import { getSecret } from './services/secretsService.js';
+import favicon from 'serve-favicon';
 
 // __dirname is not available in ES module scope, so we create it
 const __filename = fileURLToPath(import.meta.url);
@@ -42,6 +43,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(join(__dirname, 'public')));
+app.use(favicon(path.join(__dirname, 'public', 'favicon', 'favicon.ico')));
 
 let sessionStore; // declare session store outside of if block
 
