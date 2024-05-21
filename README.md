@@ -32,5 +32,5 @@ WHERE a.fbid = "987654321" AND b.fbid = "876336624537422"
 SET rel.r3 = true, rel.r2 = true;
 
 MATCH (user:User {fbid: "876336624537422"})
-SET user.lastMatchUpdate = "1970-01-01T00:00:00.000Z"
+SET user.submissionTimestamps = []
 ```
