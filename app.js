@@ -14,6 +14,7 @@ import pluralize from 'pluralize';
 import { Datastore } from '@google-cloud/datastore';
 import { DatastoreStore } from '@google-cloud/connect-datastore';
 import connectSQLite3 from 'connect-sqlite3';
+import { getSecret } from './services/secretsService.js';
 
 // __dirname is not available in ES module scope, so we create it
 const __filename = fileURLToPath(import.meta.url);
@@ -58,8 +59,9 @@ if (process.env.NODE_ENV === 'production') {
   sessionStore = new SQLiteStore({ db: 'sessions.db', dir: './var/db' });
 }
 
+const sessionSecret = await getSecret('SESSION_STORE_SECRET');
 app.use(session({
-  secret: 'keyboard cat',
+  secret: sessionSecret,
   resave: false, // don't save session if unmodified
   saveUninitialized: false, // don't create session until something stored
   store: sessionStore,
