@@ -16,7 +16,7 @@ export async function getSecret(name) {
     return process.env[name];
   } else {
     // In production, fetch the secret from Google Cloud Secret Manager
-    const projectId = process.env.GCP_PROJECT_ID;
+    const projectId = process.env.GCLOUD_PROJECT;
     const secretName = `projects/${projectId}/secrets/${name}/versions/latest`; // Customize this path as needed
     return getSecretFromGCP(secretName);
   }
