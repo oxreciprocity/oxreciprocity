@@ -9,3 +9,4 @@ env_variables:
   N4J_USER: "neo4j"
   TEST_USERNAME: "testing"
   NODE_ENV: "production"
+  GCP_PROJECT_ID: "oxreciprocity"
