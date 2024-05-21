@@ -11,7 +11,8 @@ import authConfig from './auth/index.js';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import pluralize from 'pluralize';
-import connectDatastore from '@google-cloud/connect-datastore';
+import { Datastore } from '@google-cloud/datastore';
+import { DatastoreStore } from '@google-cloud/connect-datastore';
 import connectSQLite3 from 'connect-sqlite3';
 
 // __dirname is not available in ES module scope, so we create it
@@ -45,9 +46,11 @@ let sessionStore; // declare session store outside of if block
 
 if (process.env.NODE_ENV === 'production') {
   // use Google Cloud Datastore in production
-  const DatastoreStore = connectDatastore(session);
+  const datastore = new Datastore();
   sessionStore = new DatastoreStore({
     kind: 'express-sessions',
+    expirationMs: 0,
+    dataset: datastore,
   });
 } else {
   // use SQLite in development
