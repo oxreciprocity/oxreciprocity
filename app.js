@@ -1,6 +1,4 @@
-import dotenv from 'dotenv';
-dotenv.config();
-
+import './setupEnv.js' // configure environment variables
 import createError from 'http-errors';
 import express from 'express';
 import { join } from 'path';

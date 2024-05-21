@@ -1,8 +1,5 @@
 // This sets up the connection to the Neo4j database.
-
 import { driver as createDriver, auth } from 'neo4j-driver';
-import dotenv from 'dotenv';
-dotenv.config();
 
 const URI = process.env.N4J_URI;
 const USER = process.env.N4J_USER;
