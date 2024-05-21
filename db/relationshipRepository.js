@@ -1,8 +1,8 @@
 // This file deals with updating relationship edges in the graph, and finding mutual matches.
-
-import driver from './neo4j.js';
+import createNeo4jDriver from './neo4j.js';
 
 async function changeRelationship(userFbid, targetFbid, levels) {
+  const driver = await createNeo4jDriver();
   const session = driver.session();
   try {
     const query = `
@@ -24,6 +24,7 @@ async function changeRelationship(userFbid, targetFbid, levels) {
 }
 
 async function storeMatches(userFbid, matches) { 
+  const driver = await createNeo4jDriver();
   const session = driver.session();
 
   try {
@@ -63,6 +64,7 @@ async function storeMatches(userFbid, matches) {
 }
 
 async function findMatches(userFbid) {
+  const driver = await createNeo4jDriver();
   const session = driver.session();
   const rMatchesQuery = `
   MATCH (user:User {fbid: $userFbid})-[rOut:FRIENDS]->(friend:User)

@@ -1,6 +1,4 @@
-// import { session as _session } from './neo4j';
-// const driver = require('./neo4j');
-import driver from './neo4j';
+import createNeo4jDriver from './neo4j.js';
 
 // TODO actually call this function and set up the database
 async function createConstraints() {
@@ -11,6 +9,7 @@ async function createConstraints() {
 
   // This should only be run once, at the initialisation of the database. It will not throw if you run it again, but it will not
   // modify the existing constraints.
+  const driver = await createNeo4jDriver();
   const session = driver.session();
   // const session = driver.session();
   try {

@@ -1,7 +1,8 @@
 // This file provides the logic for creating and finding users in the database. It also adds friends to the database.
-import driver from './neo4j.js';
+import createNeo4jDriver from './neo4j.js';
 
 async function createUser(profile) { // Originally also took msid
+  const driver = await createNeo4jDriver();
   const session = driver.session();
   const { id: fbid, displayName: name } = profile;
   const query = `
@@ -19,6 +20,7 @@ async function createUser(profile) { // Originally also took msid
 }
 
 async function deleteUser(userFbid) {
+  const driver = await createNeo4jDriver();
   const session = driver.session();
 
   try {
@@ -35,6 +37,7 @@ async function deleteUser(userFbid) {
 }
 
 async function addAllFriends(userFbid, friendsFbids) {
+  const driver = await createNeo4jDriver();
   const session = driver.session();
   const query = `
     MATCH (source:User {fbid: $userFbid})
@@ -56,6 +59,7 @@ async function addAllFriends(userFbid, friendsFbids) {
 }
 
 async function userExists(fbid) {
+  const driver = await createNeo4jDriver();
   const session = driver.session();
   try {
     const query = `
@@ -91,6 +95,7 @@ async function findOrCreateUser(profile, accessToken) {
 }
 
 async function findFriendsByUserId(fbid) {
+  const driver = await createNeo4jDriver();
   const session = driver.session();
   try {
     const result = await session.run(
@@ -116,6 +121,7 @@ async function findFriendsByUserId(fbid) {
 }
 
 async function setLastMatchUpdate(fbid, timestamp) {
+  const driver = await createNeo4jDriver();
   const session = driver.session();
   try {
     console.log("Setting last match update for", fbid, "to", timestamp)
@@ -133,6 +139,7 @@ async function setLastMatchUpdate(fbid, timestamp) {
 }
 
 async function getPrefTimestamps(fbid) {
+  const driver = await createNeo4jDriver();
   const session = driver.session();
   try {
     const result = await session.run(
@@ -150,6 +157,7 @@ async function getPrefTimestamps(fbid) {
 }
 
 async function appendPrefTimestamp(fbid, timestamp) {
+  const driver = await createNeo4jDriver();
   const session = driver.session();
   try {
     await session.run(
