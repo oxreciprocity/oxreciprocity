@@ -45,6 +45,17 @@ app.use(cookieParser());
 app.use(express.static(join(__dirname, 'public')));
 app.use(favicon(path.join(__dirname, 'public', 'favicon', 'favicon.ico')));
 
+// Enforce HTTPS in production
+if (process.env.NODE_ENV === 'production') {
+  app.use((req, res, next) => {
+    if (req.header('x-forwarded-proto') !== 'https') {
+      res.redirect(`https://${req.header('host')}${req.url}`);
+    } else {
+      next();
+    }
+  });
+}
+
 let sessionStore; // declare session store outside of if block
 
 if (process.env.NODE_ENV === 'production') {
