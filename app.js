@@ -120,6 +120,12 @@ app.use(function (err, req, res, next) {
 
 export default app;
 
-app.listen(3000);
-
-console.log('App running on http://localhost:3000');
+// Listen to the App Engine-specified port, or 3000 otherwise
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  if (process.env.NODE_ENV === 'development'){
+    console.log(`App running on http://localhost:3000`)
+  } else {
+    console.log(`Server listening on port ${PORT}...`);
+  }
+});
