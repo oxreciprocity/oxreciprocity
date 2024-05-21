@@ -13,15 +13,12 @@ import authConfig from './auth/index.js';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import pluralize from 'pluralize';
+import connectDatastore from '@google-cloud/connect-datastore';
+import connectSQLite3 from 'connect-sqlite3';
 
 // __dirname is not available in ES module scope, so we create it
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-
-// pass the session to the connect sqlite3 module
-// allowing it to inherit from session.Store
-import connectSQLite3 from 'connect-sqlite3';
-const SQLiteStore = connectSQLite3(session);
 
 import indexRouter from './routes/index.js';
 import microsoftRoutes from './routes/auth/microsoft.js';
@@ -46,11 +43,25 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(join(__dirname, 'public')));
 
+let sessionStore; // declare session store outside of if block
+
+if (process.env.NODE_ENV === 'production') {
+  // use Google Cloud Datastore in production
+  const DatastoreStore = connectDatastore(session);
+  sessionStore = new DatastoreStore({
+    kind: 'express-sessions',
+  });
+} else {
+  // use SQLite in development
+  const SQLiteStore = connectSQLite3(session);
+  sessionStore = new SQLiteStore({ db: 'sessions.db', dir: './var/db' });
+}
+
 app.use(session({
   secret: 'keyboard cat',
   resave: false, // don't save session if unmodified
   saveUninitialized: false, // don't create session until something stored
-  store: new SQLiteStore({ db: 'sessions.db', dir: './var/db' })
+  store: sessionStore,
 }));
 
 app.use(csrf());
