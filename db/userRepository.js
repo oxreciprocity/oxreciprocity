@@ -50,7 +50,7 @@ async function addAllFriends(userFbid, friendsFbids) {
   try {
     const result = await session.run(query, { userFbid, friendsFbids });
     session.close();
-    console.log('Friends added');
+    console.log('Friends added', friendsFbids);
     return result;
   } catch (error) {
     session.close();
