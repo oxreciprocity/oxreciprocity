@@ -7,6 +7,7 @@
 - MAYBE: After someone's created an account, they don't really need to log in using their MSID -
   maybe there's a quicker flow with only FB auth?
 - TODO: check the submit and matches endpoints are secure
+- NOTE: something about dependencies on vulnerable packages in npm
 ### Facebook login
 - https://developers.facebook.com/devpolicy/#login
 > If your app uses a manual Facebook Login flow (i.e. if your app is not using our SDKs to enable Facebook Login), check the validity of the session every 24 hours and log users out if it is no longer valid. Our SDKs perform this check automatically.
