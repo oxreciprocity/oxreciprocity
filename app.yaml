@@ -1,0 +1,11 @@
+runtime: nodejs20
+env_variables:
+  BASE_URL: "https://oxreciprocity.nw.r.appspot.com/"
+  MS_CLIENT_ID: "11db7fba-e289-4b4b-9d6f-b9f33885acd1"
+  MS_REDIRECT_PATH: "/auth/microsoft/callback"
+  FB_CLIENT_ID: "1384637622222013"
+  FB_REDIRECT_PATH: "/auth/facebook/callback"
+  N4J_URI: "neo4j+s://fa756e66.databases.neo4j.io:7687"
+  N4J_USER: "neo4j"
+  TEST_USERNAME: "testing"
+  NODE_ENV: "production"
