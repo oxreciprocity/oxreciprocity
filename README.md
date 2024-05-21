@@ -9,9 +9,9 @@
 ## FB
 - managed through https://developers.facebook.com/ with personal Facebook logins
 - Change URIs with use cases > authentication and account creation > customise > settings
-- 
 
 ## Resetting database
+```cypher
 MATCH(n)
 DETACH DELETE n;
 CREATE (:User {fbid: "123456789", name: "John Doe"})
@@ -33,3 +33,4 @@ SET rel.r3 = true, rel.r2 = true;
 
 MATCH (user:User {fbid: "876336624537422"})
 SET user.lastMatchUpdate = "1970-01-01T00:00:00.000Z"
+```

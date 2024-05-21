@@ -1,13 +1,25 @@
 ## Security
-- TODO: Add hashing for ids
-  - though not really sensitive information since application-scoped?
-- TODO: Find another csrf package 
+- TODO: Check whether we need CSRF protection
+  - if so, find a new package as `csurf` is deprecated 
+  > This npm module is currently deprecated due to the large influx of security vulunerability reports received, most of which are simply exploiting the underlying limitations of CSRF itself. The Express.js project does not have the resources to put into this module, which is largely unnecessary for modern SPA-based applications.
 - TODO: Check SQL injection not possible
 - TODO: Enable HTTPS
+- TODO: Check the submit and matches endpoints are secure
+- NOTE: Warning about dependencies on vulnerable packages in `npm audit`
+- MAYBE: Add hashing for fbids
+  - though not really sensitive information since application-scoped?
+
+## Before production
+- TODO: Build actual tests
+
+## Features
+- TODO: reminder when X friends have signed up
 - MAYBE: After someone's created an account, they don't really need to log in using their MSID -
   maybe there's a quicker flow with only FB auth?
-- TODO: check the submit and matches endpoints are secure
-- NOTE: something about dependencies on vulnerable packages in npm
+
+## Code tidiness
+- TODO: file structure, use of controllers, auth routers (e.g. auth/index.js)
+
 ### Facebook login
 - https://developers.facebook.com/devpolicy/#login
 > If your app uses a manual Facebook Login flow (i.e. if your app is not using our SDKs to enable Facebook Login), check the validity of the session every 24 hours and log users out if it is no longer valid. Our SDKs perform this check automatically.
@@ -42,12 +54,3 @@ const validateFacebookSession = async (req, res, next) => {
 // Use this middleware for routes that require an authenticated session
 app.use(validateFacebookSession);
 ```
-
-## Before production
-- TODO: Build actual tests
-
-## Features
-- TODO: reminder when X friends have signed up
-
-## Code tidiness
-- TODO: file structure, use of controllers, auth routers (e.g. auth/index.js)
