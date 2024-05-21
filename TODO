@@ -3,7 +3,6 @@
   - if so, find a new package as `csurf` is deprecated 
   > This npm module is currently deprecated due to the large influx of security vulunerability reports received, most of which are simply exploiting the underlying limitations of CSRF itself. The Express.js project does not have the resources to put into this module, which is largely unnecessary for modern SPA-based applications.
 - TODO: Check SQL injection not possible
-- TODO: Enable HTTPS
 - TODO: Check the submit and matches endpoints are secure
 - NOTE: Warning about dependencies on vulnerable packages in `npm audit`
 - MAYBE: Add hashing for fbids
