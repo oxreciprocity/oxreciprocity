@@ -1,11 +1,13 @@
 import passport from 'passport';
 import { Strategy as MicrosoftStrategy } from 'passport-microsoft';
+import { getSecret } from '../services/secretsService.js';
 
-export default function () {
+export default async function () {
   const callbackURL = `${process.env.BASE_URL}${process.env.MS_REDIRECT_PATH}`;
+  const clientSecret = await getSecret('MS_CLIENT_SECRET');
   passport.use(new MicrosoftStrategy({
     clientID: process.env.MS_CLIENT_ID,
-    clientSecret: process.env.MS_CLIENT_SECRET,
+    clientSecret: clientSecret,
     callbackURL: callbackURL,
     scope: ['user.read'],
   },

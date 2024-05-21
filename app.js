@@ -29,7 +29,7 @@ import accountRouter from './routes/account.js';
 import matchesRouter from './routes/matches.js';
 
 const app = express();
-authConfig(passport);
+await authConfig(passport);
 
 // view engine setup
 app.set('views', join(__dirname, 'views'));
