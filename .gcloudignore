@@ -12,6 +12,9 @@
 # below:
 .git
 .gitignore
+#!include:.gitignore
+README
+TODO
 
 # Node.js dependencies:
 node_modules/
