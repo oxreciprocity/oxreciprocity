@@ -6,7 +6,7 @@ async function createUser(profile) { // Originally also took msid
   const session = driver.session();
   const { id: fbid, displayName: name } = profile;
   const query = `
-      CREATE (:User {fbid: $fbid, name: $name, lastMatchUpdate: null})
+      CREATE (:User {fbid: $fbid, name: $name, submissionTimestamps: []})
   `;
   try {
     const result = await session.run(query, { fbid, name });
