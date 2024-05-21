@@ -43,21 +43,11 @@ const validateFacebookSession = async (req, res, next) => {
 app.use(validateFacebookSession);
 ```
 
-
-## UI
-- TODO: Build logic to get names+profile pictures(+profile urls?) from Facebook
-- TODO: Build UI (post-auth flow)
-
 ## Before production
-- TODO: add the non-development redirect URIs to: .env, auth/*.js files, in applications
-  - for MS, in authentication > redirect URIs
-  - for FB, in use cases > customise > settings
 - TODO: Build actual tests
 
 ## Features
 - TODO: reminder when X friends have signed up
-- TODO: only display one match at a time
-  - We should make sure that both A and B are presented with that match
 
 ## Code tidiness
 - TODO: file structure, use of controllers, auth routers (e.g. auth/index.js)

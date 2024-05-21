@@ -2,6 +2,15 @@
 ## Getting profile pictures
 - You can use the application-scoped user ID to get the [profile picture](https://developers.facebook.com/docs/graph-api/reference/user/picture/) without an access token but note that in development mode, you [have to give an access token](https://developers.facebook.com/docs/graph-api/changelog/non-versioned-changes/sep-16-2020/) to not just get the default picture.
 
+## Managing OAuth
+### MS 
+- Managed through https://entra.microsoft.com/ with oxheart@oxheart.love
+- Change URIs with authentication > redirect URIs
+## FB
+- managed through https://developers.facebook.com/ with personal Facebook logins
+- Change URIs with use cases > authentication and account creation > customise > settings
+- 
+
 ## Resetting database
 MATCH(n)
 DETACH DELETE n;
