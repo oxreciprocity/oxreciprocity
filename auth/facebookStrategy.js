@@ -3,10 +3,11 @@ import { Strategy as FacebookStrategy } from 'passport-facebook';
 import { findOrCreateUser } from '../db/userRepository.js';
 
 export default function () {
+  const callbackURL = `${process.env.BASE_URL}${process.env.FB_REDIRECT_PATH}`;
   passport.use(new FacebookStrategy({
     clientID: process.env.FB_CLIENT_ID,
     clientSecret: process.env.FB_CLIENT_SECRET,
-    callbackURL: process.env.FB_REDIRECT_URI,
+    callbackURL: callbackURL,
     state: true
   },
     async (accessToken, refreshToken, profile, cb) => {

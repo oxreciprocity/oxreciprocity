@@ -2,10 +2,11 @@ import passport from 'passport';
 import { Strategy as MicrosoftStrategy } from 'passport-microsoft';
 
 export default function () {
+  const callbackURL = `${process.env.BASE_URL}${process.env.MS_REDIRECT_PATH}`;
   passport.use(new MicrosoftStrategy({
     clientID: process.env.MS_CLIENT_ID,
     clientSecret: process.env.MS_CLIENT_SECRET,
-    callbackURL: process.env.MS_REDIRECT_URI,
+    callbackURL: callbackURL,
     scope: ['user.read'],
   },
     function (accessToken, refreshToken, profile, cb) {
