@@ -5,7 +5,7 @@
   "main": "app.js",
   "dependencies": {
     "@google-cloud/connect-datastore": "^7.0.0",
-    "@google-cloud/datastore": "^8.7.0",
+    "@google-cloud/secret-manager": "^5.5.0",
     "bcrypt": "^5.1.1",
     "bootstrap": "^5.3.3",
     "connect-ensure-login": "^0.1.1",
@@ -16,7 +16,6 @@
     "ejs": "^3.1.10",
     "express": "^4.19.2",
     "express-session": "^1.18.0",
-    "google-gax": "^4.3.3",
     "method-override": "^3.0.0",
     "mkdirp": "^3.0.1",
     "morgan": "^1.10.0",
