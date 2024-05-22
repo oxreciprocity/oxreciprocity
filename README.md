@@ -1,4 +1,64 @@
 # oxreciprocity
+## Code structure
+```plaintext
+.
+├── README.md
+├── TODO
+├── app.js # environment variables, dependencies, view engine, session store, CSRF, routes, error handling, server setup
+├── app.yaml # configuration for Google App Engine
+├── auth
+│   ├── facebookStrategy.js
+│   ├── index.js # configure all three passport-js strategies
+│   ├── localStrategy.js
+│   └── microsoftStrategy.js
+├── controllers
+│   └── relationshipController.js # manage rate-limiting for updating relationships
+├── db
+│   ├── initialiseDatabase.js # create constraints, not currently used
+│   ├── neo4j.js # connect to Neo4j database
+│   ├── relationshipRepository.js # manage relationships in the database
+│   └── userRepository.js # manage users in the database
+├── package-lock.json
+├── package.json
+├── public
+│   ├── favicon
+│   │   └── ...
+│   ├── scripts
+│   │   └── main.js # currently only relevant for homepage with submitting preferences
+│   └── styles.css
+├── routes
+│   ├── account.js # handle account deletion
+│   ├── auth # redirects for OAuth or local login
+│   │   ├── facebook.js
+│   │   ├── local.js
+│   │   └── microsoft.js
+│   ├── index.js # homepage, renders differently based on login status
+│   ├── matches.js # mutual matches
+│   └── submit.js # handle submission of preferences
+├── services
+│   ├── facebookService.js # queries to Graph API and post-processing
+│   ├── friendService.js # add friends to database
+│   └── secretsService.js # deal with Google Secret Manager
+├── setupEnv.js # set up environment variables
+├── var
+│   └── db
+│       └── sessions.db
+└── views
+    ├── error.ejs
+    ├── index.ejs
+    ├── innerLogin.ejs
+    ├── matches.ejs
+    ├── outerLogin.ejs
+    ├── partials
+    │   ├── _about.ejs
+    │   ├── _friendsList.ejs
+    │   ├── _head.ejs
+    │   ├── _mutualMatches.ejs
+    │   ├── _navbar.ejs
+    │   └── _scripts.ejs
+    └── testLogin.ejs
+```
+
 ## Getting profile pictures
 - You can use the application-scoped user ID to get the [profile picture](https://developers.facebook.com/docs/graph-api/reference/user/picture/) without an access token but note that in development mode, you [have to give an access token](https://developers.facebook.com/docs/graph-api/changelog/non-versioned-changes/sep-16-2020/) to not just get the default picture.
 
