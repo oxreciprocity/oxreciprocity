@@ -13,8 +13,9 @@
 - MAYBE: Better client-side error handling / console logging
 
 ## Features
-- TODO: reminder when X friends have signed up
 - TODO: email B when A matches with them, and/or prevent people submitting on same person multiple times too soon
+- TODO: reminder when X friends have signed up
+- TODO: deal with when people remove each other as friends on FB
 - MAYBE: After someone's created an account, they don't really need to log in using their MSID -
   maybe there's a quicker flow with only FB auth?
 - MAYBE: it's a bit confusing for users that they get logged in immediately
