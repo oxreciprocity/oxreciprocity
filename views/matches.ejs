@@ -4,14 +4,15 @@
 <%- include('partials/_head', { title: 'Matches' }) %>
 
 <body>
+  <div class="container mt-4">
+    <%- include('partials/_navbar') %>
+      <div>
+        <h1>Your matches</h1>
+        <%- include('partials/_mutualMatches') %>
+      </div>
+    <%- include('partials/_footer') %>
+  </div>
   <%- include('partials/_scripts') %>
-    <div class="container mt-4">
-      <%- include('partials/_navbar') %>
-        <div>
-          <h1>Your matches</h1>
-          <%- include('partials/_mutualMatches') %>
-        </div>
-    </div>
 </body>
 
 </html>
