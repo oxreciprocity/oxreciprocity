@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col">
-    <h2>My Friends</h2>
+    <h2>My mutuals</h2>
   </div>
 </div>
 <% if (friends.length > 0) { %>
@@ -19,8 +19,8 @@
       <div class="col-6 col-md-3 mb-4">
         <div class="card-container friends-container">
           <div class="card h-100" style="background-image: url('<%= friend.picUrl %>');">
-            <div class="card-body text-center">
-              <h5 class="card-title"><%= friend.name %></h5>
+            <div class="card-body">
+              <h5 class="card-title text-light"><%= friend.name %></h5>
             </div>
             <div class="card-overlay">
               <div class="overlay-content">
