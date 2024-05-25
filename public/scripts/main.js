@@ -6,7 +6,4 @@ $(document).ready(function () {
       event.preventDefault();
     }
   });
-
-  // Date in footer
-  document.getElementById('current-year').textContent = new Date().getFullYear();
 });
