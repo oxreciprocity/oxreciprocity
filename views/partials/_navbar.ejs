@@ -38,12 +38,14 @@
                 <input type="hidden" name="_csrf" value="<%= csrfToken %>">
               </form>
             </li>
+            <% if (user.provider === 'facebook'){ %>
             <li>
               <form id="delete-account-form" action="/account/delete" method="post">
                 <button class="dropdown-item text-danger btn-delete-account" type="submit">Delete your account</button>
                 <input type="hidden" name="_csrf" value="<%= csrfToken %>">
               </form>
             </li>
+            <% } %>
           </ul>
         </li>
       <% } %>
