@@ -1,44 +1,53 @@
-<div class="d-flex flex-column flex-md-row justify-content-between align-items-center mb-4">
-  <a href='/' class="mb-3 mb-md-0">
-    <img src="https://oxheart.love/wp-content/uploads/2024/01/Facebook-cover.png" alt="Oxreciprocity logo" class="logo img-fluid">
+<nav class="navbar navbar-expand-md navbar-light bg-light mb-4">
+  <a href="/" class="navbar-brand">
+    <img src="https://oxheart.love/wp-content/uploads/2024/01/Facebook-cover.png" alt="Oxreciprocity logo" class="logo">
   </a>
-  <% if (!user) { %>
-    <p class="user h4 mb-3 mb-md-0 text-center text-md-start">
-      Oxreciprocity
-    </p>
-    <div class="text-center text-md-end">
-      <a href="mailto:oxreciprocity@oxheart.love"><button class="btn btn-outline-secondary mb-3 mb-md-0" type="button">Contact</button></a>
-    </div>
-  <% } else if (user.provider === 'facebook'){ %>
-  <p class="user h4 mb-3 mb-md-0 text-center text-md-start">
-    Oxreciprocity - logged in as <%= user.displayName %>
-  </p>
-  <div class="text-center text-md-end">
-    <% if (currentPath !== '/matches/') { %>
-      <a href="/matches"><button class="btn btn-secondary mb-3 mb-md-0">My matches</button></a>
-    <% } else { %>
-      <a href="/"><button class="btn btn-outline-secondary mb-3 mb-md-0">Home</button></a>
-    <% } %>
-    <a href="mailto:oxreciprocity@oxheart.love"><button class="btn btn-outline-secondary mb-3 mb-md-0" type="button">Contact</button></a>
-    <form action="/auth/logout" method="post" class="d-inline">
-      <button class="btn btn-outline-secondary mb-3 mb-md-0" type="submit">Sign out</button>
-      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-    </form>
-    <form id="delete-account-form" action="/account/delete" method="post" class="d-inline">
-      <button class="btn btn-danger mb-3 mb-md-0" type="submit">Delete your account</button>
-      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-    </form>
+  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse justify-content-end" id="navbarContent">
+    <ul class="navbar-nav">
+      <% if (!user) { %>
+        <li class="nav-item">
+          <a class="nav-link" href="mailto:oxreciprocity@oxheart.love">Contact</a>
+        </li>
+      <% } else if (user.provider === 'facebook'){ %>
+        <% if (currentPath !== '/matches/') { %>
+          <li class="nav-item">
+            <a class="nav-link" href="/matches">My matches</a>
+          </li>
+        <% } else { %>
+          <li class="nav-item">
+            <a class="nav-link" href="/">Home</a>
+          </li>
+        <% } %>
+        <li class="nav-item">
+          <a class="nav-link" href="mailto:oxreciprocity@oxheart.love">Contact</a>
+        </li>
+        <li class="nav-item">
+          <form action="/auth/logout" method="post" class="d-inline">
+            <button class="btn btn-outline-secondary" type="submit">Sign out</button>
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+          </form>
+        </li>
+        <li class="nav-item">
+          <form id="delete-account-form" action="/account/delete" method="post" class="d-inline">
+            <button class="btn btn-danger" type="submit">Delete your account</button>
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+          </form>
+        </li>
+      <% } else { %>
+        <li class="nav-item">
+          <a class="nav-link" href="mailto:oxreciprocity@oxheart.love">Contact</a>
+        </li>
+        <li class="nav-item">
+          <form action="/auth/logout" method="post" class="d-inline">
+            <button class="btn btn-outline-secondary" type="submit">Sign out</button>
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+          </form>
+        </li>
+      <% } %>
+    </ul>
   </div>
-  <% } else { %>
-    <p class="user h4 mb-3 mb-md-0 text-center text-md-start">
-      Oxreciprocity
-    </p>
-    <div class="text-center text-md-end">
-      <a href="mailto:oxreciprocity@oxheart.love"><button class="btn btn-outline-secondary mb-3 mb-md-0" type="button">Contact</button></a>
-      <form action="/auth/logout" method="post" class="d-inline">
-        <button class="btn btn-outline-secondary mb-3 mb-md-0" type="submit">Sign out</button>
-        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-      </form>
-    </div>
-  <% } %>
-</div>
+</nav>
