@@ -12,6 +12,10 @@
 - TODO: Build actual tests
 - MAYBE: Better client-side error handling / console logging
 
+## Database
+- TODO store people's MS emails for notifications
+- TODO store match history
+
 ## Features
 - TODO: email B when A matches with them, and/or prevent people submitting on same person multiple times too soon
 - TODO: reminder when X friends have signed up
