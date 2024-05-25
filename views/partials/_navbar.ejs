@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-md navbar-light bg-light mb-4">
+<nav class="navbar navbar-expand-md navbar-light mb-4">
   <a href="/" class="navbar-brand">
     <img src="https://oxheart.love/wp-content/uploads/2024/01/Facebook-cover.png" alt="Oxreciprocity logo" class="logo">
   </a>
@@ -12,40 +12,39 @@
         <li class="nav-item">
           <a class="nav-link" href="mailto:oxreciprocity@oxheart.love">Contact</a>
         </li>
-      <% } else if (user.provider === 'facebook'){ %>
-        <% if (currentPath !== '/matches/') { %>
-          <li class="nav-item">
-            <a class="nav-link" href="/matches">My matches</a>
-          </li>
-        <% } else { %>
-          <li class="nav-item">
-            <a class="nav-link" href="/">Home</a>
-          </li>
+      <% } else { %>
+        <% if (user.provider === 'facebook'){ %>
+          <% if (currentPath !== '/matches/') { %>
+            <li class="nav-item">
+              <a class="nav-link" href="/matches">My matches</a>
+            </li>
+          <% } else { %>
+            <li class="nav-item">
+              <a class="nav-link" href="/">Home</a>
+            </li>
+          <% } %>
         <% } %>
         <li class="nav-item">
           <a class="nav-link" href="mailto:oxreciprocity@oxheart.love">Contact</a>
         </li>
-        <li class="nav-item">
-          <form action="/auth/logout" method="post" class="d-inline">
-            <button class="btn btn-outline-secondary" type="submit">Sign out</button>
-            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-          </form>
-        </li>
-        <li class="nav-item">
-          <form id="delete-account-form" action="/account/delete" method="post" class="d-inline">
-            <button class="btn btn-danger" type="submit">Delete your account</button>
-            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-          </form>
-        </li>
-      <% } else { %>
-        <li class="nav-item">
-          <a class="nav-link" href="mailto:oxreciprocity@oxheart.love">Contact</a>
-        </li>
-        <li class="nav-item">
-          <form action="/auth/logout" method="post" class="d-inline">
-            <button class="btn btn-outline-secondary" type="submit">Sign out</button>
-            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-          </form>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Account
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+            <li>
+              <form action="/auth/logout" method="post">
+                <button class="dropdown-item btn-signout" type="submit">Sign out</button>
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+              </form>
+            </li>
+            <li>
+              <form id="delete-account-form" action="/account/delete" method="post">
+                <button class="dropdown-item text-danger btn-delete-account" type="submit">Delete your account</button>
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+              </form>
+            </li>
+          </ul>
         </li>
       <% } %>
     </ul>
