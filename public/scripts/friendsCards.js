@@ -75,14 +75,6 @@ $(document).ready(function () {
   $('.overlay-content').click(function(event) {
     event.stopPropagation();
   });
-
-  // Confirmation dialogue for deleting account
-  $('#delete-account-form').submit(function (event) {
-    const confirmation = confirm('Are you sure you want to delete your account? This action cannot be undone.');
-    if (!confirmation) {
-      event.preventDefault();
-    }
-  });
 });
 
 function showMessage(container, message, type) {
