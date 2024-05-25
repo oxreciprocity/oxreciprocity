@@ -1,6 +1,6 @@
 runtime: nodejs20
 env_variables:
-  BASE_URL: "https://oxreciprocity.nw.r.appspot.com"
+  BASE_URL: "https://reciprocity.oxheart.love"
   MS_CLIENT_ID: "11db7fba-e289-4b4b-9d6f-b9f33885acd1"
   MS_REDIRECT_PATH: "/auth/microsoft/callback"
   FB_CLIENT_ID: "1384637622222013"
