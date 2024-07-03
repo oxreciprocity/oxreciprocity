@@ -16,6 +16,8 @@ import { DatastoreStore } from '@google-cloud/connect-datastore';
 import connectSQLite3 from 'connect-sqlite3';
 import { getSecret } from './services/secretsService.js';
 import favicon from 'serve-favicon';
+import cron from 'node-cron';
+import createNeo4jDriver from './db/neo4j.js';
 
 // __dirname is not available in ES module scope, so we create it
 const __filename = fileURLToPath(import.meta.url);
@@ -28,6 +30,8 @@ import basicRoutes from './routes/auth/local.js';
 import submitRouter from './routes/submit.js';
 import accountRouter from './routes/account.js';
 import matchesRouter from './routes/matches.js';
+// import webhookRouter from './routes/TEST_webhook.js';
+// import onboardingRouter from './routes/TEST_onboarding.js';
 
 const app = express();
 await authConfig(passport);
@@ -80,6 +84,8 @@ app.use(session({
   store: sessionStore,
 }));
 
+// app.use('/webhook', webhookRouter);
+
 app.use(csrf());
 
 app.use(passport.authenticate('session'));
@@ -104,6 +110,8 @@ app.use('/', indexRouter);
 app.use('/auth/microsoft', microsoftRoutes);
 app.use('/auth/facebook', facebookRoutes);
 app.use('/auth/local', basicRoutes); // Login for test users
+
+// app.use('/onboarding', onboardingRouter);
 
 app.use('/auth/logout', function (req, res) {
   req.logout(function (err) {
@@ -146,6 +154,26 @@ app.use(function (err, req, res, next) {
 });
 
 export default app;
+
+// Keep database alive
+const driver = await createNeo4jDriver();
+async function keepAliveQuery() {
+  const session = driver.session();
+  try {
+    const result = await session.run('MATCH (n) RETURN COUNT(n) AS count');
+    console.log(`Number of nodes: ${result.records[0].get('count')}`);
+  } catch (error) {
+    console.error('Error executing keep-alive query:', error);
+  } finally {
+    await session.close();
+  }
+}
+
+// Schedule the job to run once a day
+cron.schedule('0 0 * * *', () => {
+  console.log('Running keep-alive query...');
+  keepAliveQuery();
+});
 
 // Listen to the App Engine-specified port, or 3000 otherwise
 const PORT = process.env.PORT || 3000;
