@@ -17,7 +17,24 @@
 - TODO store match history
 
 ## Features
+### Notifications
 - TODO: email B when A matches with them, and/or prevent people submitting on same person multiple times too soon
+  - https://developers.facebook.com/docs/facebook-login/guides/map-users/ 
+  - https://developers.facebook.com/docs/messenger-platform/getting-started/quick-start 
+1. Set up webhooks on the new reciprocity-messaging app (use the request format from the sample app). We mainly need the optins one?
+2. Set up basic messaging functionality to get through App Review
+3. POST to '/webhook' route when a new match happens, with the name of the match and the user's app-scoped ID (ASID)
+4. Swap the ASID for a page-scoped ID (PSID), and then notify them with MessengerApi.
+  a. This is the [second use case here](https://developers.facebook.com/docs/messenger-platform/identity/id-matching/#given-a-user-id-for-an-app--retrieve-the-ids-for-bots-in-messenger-owned-by-the-same-business)
+5. (Maybe?) Add a prompt to collect PSIDs when the user logs in. Possibly, we need to get them to actually send a message.
+  a. The FB SDK login [here](https://medium.com/@sumindaniro/send-updates-or-messages-to-users-via-facebook-messenger-69e4e46ecce8) might be useful?
+  b. https://developers.facebook.com/docs/messenger-platform/discovery/send-to-messenger-plugin. We could provide the ASID as `ref`, and then I think that some sort of webhook gets called to give us PSID.
+  c. Ooh or we could use the [checkbox plugin](https://developers.facebook.com/docs/messenger-platform/reference/web-plugins).
+  I think with that one, you provide the `user_ref` you want, and we could just use ASID? (No need for PSIDs at all, I think?)
+    - Note that "This parameter should be unique not just for every person, but for every time the plugin is rendered.". So we'd
+    need to augment ASID with datetime info, or something.
+
+### Other
 - TODO: reminder when X friends have signed up
 - TODO: deal with when people remove each other as friends on FB
 - MAYBE: After someone's created an account, they don't really need to log in using their MSID -
