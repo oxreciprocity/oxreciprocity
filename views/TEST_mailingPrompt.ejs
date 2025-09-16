@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+
+<%- include('partials/_head', { title: 'Set up your account' }) %>
+<head>
+  <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline' 'unsafe-eval' data: blob:;">
+</head>
+<body>
+  <script>
+    window.fbAsyncInit = function() {
+      FB.init({
+        appId: '<%= appId %>',
+        autoLogAppEvents: true,
+        xfbml: true,
+        version: 'v20.0'
+      });
+
+      // FB.Event.subscribe('messenger_checkbox', function(e) {
+      //       console.log("messenger_checkbox event");
+      //       console.log(e);
+
+      //       if (e.event == 'rendered') {
+      //           console.log("Plugin was rendered");
+      //       } else if (e.event == 'checkbox') {
+      //           var checkboxState = e.state;
+      //           console.log("Checkbox state: " + checkboxState);
+      //       } else if (e.event == 'not_you') {
+      //           console.log("User clicked 'not you'");
+      //       } else if (e.event == 'hidden') {
+      //           console.log("Plugin was hidden");
+      //       }
+      //   });
+
+      FB.Event.subscribe('send_to_messenger', function(e) {
+        console.log("Send to Messenger event triggered");
+        console.log(e);
+
+        // Handling different types of events
+        if (e.event === 'rendered') {
+          console.log("Send to Messenger plugin was rendered");
+        } else if (e.event === 'clicked') {
+          console.log("Send to Messenger button was clicked");
+        } else if (e.event === 'not_you') {
+          console.log("User clicked 'not you'");
+        } else if (e.event === 'opt_in') {
+          console.log("User opted in");
+          console.log("Ref:", e.ref); // Logging the pass-through parameter
+          console.log("Opt-in after confirmation:", e.is_after_optin);
+        }
+      });
+    };
+  </script>
+  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
+
+  <div class="container mt-4">
+    <%- include('partials/_navbar') %>
+      <div>
+        <h1>Let's get you set up</h1>
+        <%- include('partials/TEST_messengerCheckbox') %>
+      </div>
+    <%- include('partials/_footer') %>
+  </div>
+  <%- include('partials/_scripts') %>
+</body>
+
+</html>
